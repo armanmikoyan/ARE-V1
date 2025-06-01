@@ -1,42 +1,79 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+	/* Color Palette */
+	--color-primary: #03045e;
+	--color-secondary: #023e8a;
+	--color-tertiary: #0077b6;
+	--color-quaternary: #0096c7;
+	--color-quinary: #00b4d8;
+	--color-senary: #48cae4;
+	--color-septenary: #90e0ef;
+	--color-octonary: #ade8f4;
+	--color-nonary: #caf0f8;
+
+	/* Font Weights */
+	--font-weight-thin: 100;
+	--font-weight-extralight: 200;
+	--font-weight-light: 300;
+	--font-weight-regular: 400;
+	--font-weight-medium: 500;
+	--font-weight-semibold: 600;
+	--font-weight-bold: 700;
+	--font-weight-extrabold: 800;
+	--font-weight-black: 900;
+
+	/* Font Sizes */
+	--font-size-xs: 0.75rem;
+	--font-size-sm: 0.875rem;
+	--font-size-md: 1rem;
+	--font-size-lg: 1.125rem;
+	--font-size-xl: 1.25rem;
+	--font-size-2xl: 1.5rem;
+	--font-size-3xl: 2rem;
+
+	/* Spacing (Padding/margin) */
+	--space-xxs: 0.25rem;
+	--space-xs: 0.5rem;
+	--space-sm: 0.75rem;
+	--space-md: 1rem;
+	--space-lg: 1.5rem;
+	--space-xl: 2rem;
+	--space-2xl: 3rem;
+
+	/* Border radiuses  */
+	--radius-sm: 0.25rem;
+	--radius-md: 0.5rem;
+	--radius-lg: 0.75rem;
+	--radius-xl: 1rem;
+	--radius-full: 9999rem;
+
+	/* Breakpoints (used for reference in CSS/JS) */
+	--breakpoint-xs: 320px; /* Small phones */
+	--breakpoint-sm: 480px; /* Phones */
+	--breakpoint-md: 768px; /* Tablets */
+	--breakpoint-lg: 1024px; /* Laptops */
+	--breakpoint-xl: 1280px; /* Desktops */
+	--breakpoint-2xl: 1536px; /* Large screens */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* @media (prefers-color-scheme: dark) {} */
 
 html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
+	max-width: 100vw;
+	overflow-x: hidden;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	font-family: var(--font-rubik), sans-serif;
 }
 
 * {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+	color: inherit;
+	text-decoration: none;
 }
