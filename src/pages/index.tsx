@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { GetServerSidePropsContext } from 'next';
 import { getPageData } from './_data';
 
 export default function Home({ data }) {
@@ -15,6 +16,6 @@ export default function Home({ data }) {
 	);
 }
 
-export async function getServerSideProps(ctx) {
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 	return getPageData(ctx);
 }
