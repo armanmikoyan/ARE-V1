@@ -1,5 +1,7 @@
-export async function getPageData(ctx) {
-	console.log(ctx);
+import { GetServerSidePropsContext } from 'next';
+
+export async function getPageData(ctx: GetServerSidePropsContext) {
+	void ctx;
 	return {
 		props: {
 			data: [1, 2, 3],
