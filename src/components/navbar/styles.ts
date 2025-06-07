@@ -41,7 +41,7 @@ export const NavItem = styled.li({
 	},
 
 	'&:hover::after': {
-		width: '100%',
+		width: '70%',
 	},
 });
 
@@ -53,7 +53,7 @@ export const ActionWrapper = styled.div({
 });
 
 export const Subscribe = styled(Button)({
-	color: 'var(--color-tertiary)',
+	color: 'var(--color-septenary)',
 	backgroundColor: 'var(--color-octonary)',
 	transition: 'background-color 0.3s ease, color 0.3s ease',
 	'&:hover': {

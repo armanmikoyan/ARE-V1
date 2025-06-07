@@ -15,7 +15,9 @@ export default function Navbar() {
 	return (
 		<Nav>
 			<NavLogoWrapper>
-				<Image width={30} height={30} alt="logo" src={'./vercel.svg'} />
+				<NavLink href={'/'}>
+					<Image width={30} height={30} alt="logo" src={'./vercel.svg'} />
+				</NavLink>
 			</NavLogoWrapper>
 			<NavList>
 				{navLinks.map(({ label, href }, id) => {
