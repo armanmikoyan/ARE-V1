@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { GetServerSidePropsContext } from 'next';
 import { getPageData } from './_data';
+import Navbar from '@/components/navbar';
 
 export default function Home({ data }) {
 	return (
@@ -11,7 +12,10 @@ export default function Home({ data }) {
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<div>{data}</div>
+			<div>
+				<Navbar />
+				{data}
+			</div>
 		</>
 	);
 }
