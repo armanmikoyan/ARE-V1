@@ -1,14 +1,14 @@
 :root {
 	/* Color Palette */
-	--color-primary: #050b2b;
+	--color-primary: #03061b;
 	--color-secondary: #0a1469;
 	--color-tertiary: #192d6a;
+	--color-nonary: #0039a2;
 	--color-quaternary: #2f4ba7;
+	--color-octonary: #0948bd;
 	--color-quinary: #4a6cd4;
 	--color-senary: #829bff;
 	--color-septenary: #b8c7ff;
-	--color-octonary: #4cc9f0;
-	--color-nonary: #00c3ff;
 
 	/* Font Weights */
 	--font-weight-thin: 100;
