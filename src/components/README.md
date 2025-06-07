@@ -1,14 +1,13 @@
-| File             | Purpose                                                               |
-| ---------------- | --------------------------------------------------------------------- |
-| `index.tsx`      | Main component file. Import and use this component from here.         |
-| `index.test.tsx` | Main component's test file.                                           |
-| `hooks.ts`       | Local custom hooks used by the component.                             |
-| `styles.ts`      | Styled Components or style definitions.                               |
-| `utils.ts`       | Utility/helper functions scoped to this component.                    |
-| `utils.test.js`  | Unit tests for the utility functions.                                 |
-| `types.ts`       | TypeScript type/interface declarations used in the component.         |
-| `states.ts`      | Local Jotai atomsused in this component.                              |
-| `constants.ts`   | Local constants used in this component.                               |
+| File             | Purpose                                                             |
+| ---------------- | ------------------------------------------------------------------- |
+| `index.tsx`      | Main component file. Import and use this component from here.       |
+| `index.test.tsx` | Main component's test file.                                         |
+| `hooks.ts`       | Local custom hooks used by the component.                           |
+| `styles.ts`      | Styled Components or style definitions.                             |
+| `utils.ts`       | Utility/helper functions scoped to this component.                  |
+| `utils.test.js`  | Unit tests for the utility functions.                               |
+| `types.ts`       | TypeScript type/interface/enums declarations used in the component. |
+| `states.ts`      | Local Jotai atomsused in this component.                            |
 
 ---
 
@@ -22,7 +21,6 @@ import { Wrapper } from './styles';
 import { formatLabel } from './utils';
 import { countAtom } from './states';
 import { useAtom } from 'jotai';
-import { THRESHOLD } from './constants';
 
 export default function MyComponent() {
 	const { label } = useMyCustomHook();
@@ -30,7 +28,7 @@ export default function MyComponent() {
 
 	return (
 		<Wrapper>
-		   	{formatLabel(labelText)} and {count} and {THRESHOLD}
+			{formatLabel(labelText)} and {count}
 		</Wrapper>
 	);
 }
