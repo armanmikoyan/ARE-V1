@@ -1,8 +1,14 @@
 import React from 'react';
+import Navbar from '@/components/navbar';
+import { Main } from './styles';
 
-// to do
-function DefaultLayout() {
-	return <div>default layout</div>;
+function DefaultLayout({ children }) {
+	return (
+		<Main>
+			<Navbar />
+			{children}
+		</Main>
+	);
 }
 
 export default DefaultLayout;
