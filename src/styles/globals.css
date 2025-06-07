@@ -1,14 +1,14 @@
 :root {
 	/* Color Palette */
-	--color-primary: #03045e;
-	--color-secondary: #023e8a;
-	--color-tertiary: #0077b6;
-	--color-quaternary: #0096c7;
-	--color-quinary: #00b4d8;
-	--color-senary: #48cae4;
-	--color-septenary: #90e0ef;
-	--color-octonary: #ade8f4;
-	--color-nonary: #caf0f8;
+	--color-primary: #050b2b;
+	--color-secondary: #0a1469;
+	--color-tertiary: #192d6a;
+	--color-quaternary: #2f4ba7;
+	--color-quinary: #4a6cd4;
+	--color-senary: #829bff;
+	--color-septenary: #b8c7ff;
+	--color-octonary: #4cc9f0;
+	--color-nonary: #00c3ff;
 
 	/* Font Weights */
 	--font-weight-thin: 100;
@@ -60,11 +60,13 @@
 html,
 body {
 	max-width: 100vw;
-	overflow-x: hidden;
+	overflow-x: clip;
 }
 
 body {
-	font-family: var(--font-rubik), sans-serif;
+	font-family: var(--font-rubik);
+	background-color: var(--color-primary);
+	color: var(--color-septenary);
 }
 
 * {

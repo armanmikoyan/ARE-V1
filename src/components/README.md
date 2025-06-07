@@ -8,6 +8,7 @@
 | `utils.test.js`  | Unit tests for the utility functions.                               |
 | `types.ts`       | TypeScript type/interface/enums declarations used in the component. |
 | `states.ts`      | Local Jotai atomsused in this component.                            |
+| `content.ts`     | Local Content for dynamic mapping                                   |
 
 ---
 
@@ -20,6 +21,7 @@ import { useMyCustomHook } from './hooks';
 import { Wrapper } from './styles';
 import { formatLabel } from './utils';
 import { countAtom } from './states';
+import { data } from './content';
 import { useAtom } from 'jotai';
 
 export default function MyComponent() {
@@ -28,6 +30,9 @@ export default function MyComponent() {
 
 	return (
 		<Wrapper>
+			{data.map((val, id) => (
+				<span key={id}>val</span>
+			))}
 			{formatLabel(labelText)} and {count}
 		</Wrapper>
 	);
