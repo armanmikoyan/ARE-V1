@@ -1,11 +1,12 @@
 import '@/globals/styles.css';
 import type { AppProps } from 'next/app';
-import { InitGlobalTheme } from '../globals/utils';
+import { useInitGlobalTheme } from '../globals/hooks';
 
 export default function App({ Component, pageProps }: AppProps) {
+	useInitGlobalTheme();
+
 	return (
 		<>
-			<InitGlobalTheme />
 			<Component {...pageProps} />;
 		</>
 	);
