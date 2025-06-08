@@ -1,14 +1,11 @@
 :root {
 	/* Color Palette */
-	--color-primary: #03061b;
-	--color-secondary: #0a1469;
-	--color-tertiary: #192d6a;
-	--color-nonary: #0039a2;
-	--color-quaternary: #2f4ba7;
-	--color-octonary: #0948bd;
-	--color-quinary: #4a6cd4;
-	--color-senary: #829bff;
-	--color-septenary: #b8c7ff;
+	--color-text-primary: #032114;
+	--color-text-secondary: #d8f8f0;
+	--color-background: #f1fefb;
+	--color-primary: #4382ff;
+	--color-secondary: #446ed0;
+	--color-accent: #4790f0;
 
 	/* Font Weights */
 	--font-weight-thin: 100;
@@ -45,17 +42,15 @@
 	--radius-lg: 0.75rem;
 	--radius-xl: 1rem;
 	--radius-full: 9999rem;
-
-	/* Breakpoints (used for reference in CSS/JS) */
-	--breakpoint-xs: 320px; /* Small phones */
-	--breakpoint-sm: 480px; /* Phones */
-	--breakpoint-md: 768px; /* Tablets */
-	--breakpoint-lg: 1024px; /* Laptops */
-	--breakpoint-xl: 1280px; /* Desktops */
-	--breakpoint-2xl: 1536px; /* Large screens */
 }
-
-/* @media (prefers-color-scheme: dark) {} */
+.dark {
+	--color-text-primary: #e2f6fd;
+	--color-text-secondary: #e2f6fd;
+	--color-background: #020921;
+	--color-primary: #510aa9;
+	--color-secondary: #6e06ef;
+	--color-accent: #5311e1;
+}
 
 html,
 body {
@@ -65,8 +60,8 @@ body {
 
 body {
 	font-family: var(--font-rubik);
-	background-color: var(--color-primary);
-	color: var(--color-septenary);
+	background-color: var(--color-background);
+	color: var(--color-text-primary);
 }
 
 * {

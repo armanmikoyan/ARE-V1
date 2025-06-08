@@ -10,6 +10,7 @@ import {
 } from './styles';
 import { navLinks } from './content';
 import Image from 'next/image';
+import ThemeToggler from '@/components/themeToggler';
 
 export default function Navbar() {
 	return (
@@ -31,6 +32,7 @@ export default function Navbar() {
 			<ActionWrapper>
 				<Subscribe variant="contained">Subscribe</Subscribe>
 				<LogIn variant="outlined">Log In</LogIn>
+				<ThemeToggler />
 			</ActionWrapper>
 		</Nav>
 	);

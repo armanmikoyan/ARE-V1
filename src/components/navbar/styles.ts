@@ -9,7 +9,7 @@ export const Nav = styled.nav({
 	backgroundColor: 'transparent',
 	backdropFilter: 'blur(0.2rem)',
 	padding: '1.5rem 3rem',
-	boxShadow: '0 0.1rem 1rem var(--color-septenary)',
+	boxShadow: '0 0.1rem 1rem var(--color-primary)',
 	position: 'sticky',
 	top: '0',
 });
@@ -34,7 +34,7 @@ export const NavItem = styled.li({
 		left: '50%',
 		width: 0,
 		height: '0.05rem',
-		backgroundColor: 'var(--color-septenary)',
+		backgroundColor: 'var(--color-text-primary)',
 		transition: 'width 0.3s ease',
 		transformOrigin: 'center',
 		transform: 'translateX(-50%)',
@@ -53,20 +53,19 @@ export const ActionWrapper = styled.div({
 });
 
 export const Subscribe = styled(Button)({
-	color: 'var(--color-septenary)',
-	backgroundColor: 'var(--color-octonary)',
+	color: 'var(--color-text-secondary)',
+	backgroundColor: 'var(--color-primary)',
 	transition: 'background-color 0.3s ease, color 0.3s ease',
 	'&:hover': {
-		backgroundColor: 'var(--color-nonary)',
+		backgroundColor: 'var(--color-secondary)',
 	},
 });
 
 export const LogIn = styled(Button)({
-	color: 'var(--color-septenary)',
-	border: '1px solid var(--color-senary)',
+	color: 'var(--color-text-primary)',
+	border: '1px solid var(--color-primary)',
 	transition: 'border 0.3s ease, opacity 0.3s ease',
 	'&:hover': {
-		border: '1px solid var(--color-quinary)',
-		opacity: '0.8',
+		opacity: '0.7',
 	},
 });
