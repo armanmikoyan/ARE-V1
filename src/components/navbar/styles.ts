@@ -8,7 +8,7 @@ export const Nav = styled.nav({
 	alignItems: 'center',
 	backgroundColor: 'transparent',
 	backdropFilter: 'blur(0.2rem)',
-	padding: '1.3rem 3rem',
+	padding: '1rem 3rem',
 	boxShadow: '0 0.1rem 1rem var(--color-primary)',
 	fontWeight: 'var(--font-weight-bold)',
 	borderBottomLeftRadius: 'var(--radius-xxxl)',
@@ -24,6 +24,9 @@ export const NavList = styled.ul({
 	display: 'flex',
 	gap: '2rem',
 	listStyleType: 'none',
+
+	// can be removed since left side has only logo right side has 3 buttons
+	marginLeft: '6rem',
 });
 
 export const NavItem = styled.li({
