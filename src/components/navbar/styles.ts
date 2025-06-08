@@ -10,6 +10,8 @@ export const Nav = styled.nav({
 	backdropFilter: 'blur(0.2rem)',
 	padding: '1.5rem 3rem',
 	boxShadow: '0 0.1rem 1rem var(--color-primary)',
+	fontWeight: 'var(--font-weight-bold)',
+	fontSize: 'var(--font-size-sm)',
 	position: 'sticky',
 	top: '0',
 });
@@ -53,6 +55,7 @@ export const ActionWrapper = styled.div({
 });
 
 export const Subscribe = styled(Button)({
+	fontWeight: 'var(--font-weight-semibold)',
 	color: 'var(--color-text-secondary)',
 	backgroundColor: 'var(--color-primary)',
 	transition: 'background-color 0.3s ease, color 0.3s ease',
@@ -62,6 +65,7 @@ export const Subscribe = styled(Button)({
 });
 
 export const LogIn = styled(Button)({
+	fontWeight: 'var(--font-weight-semibold)',
 	color: 'var(--color-text-primary)',
 	border: '1px solid var(--color-primary)',
 	transition: 'border 0.3s ease, opacity 0.3s ease',
