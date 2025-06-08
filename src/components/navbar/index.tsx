@@ -25,7 +25,7 @@ export default function Navbar() {
 					<Image
 						width={30}
 						height={30}
-						alt="logo"
+						alt="Logo"
 						src={globalTheme === ThemeMode.DARK ? './vercel.svg' : './window.svg'}
 					/>
 				</NavLink>
