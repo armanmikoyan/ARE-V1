@@ -23,10 +23,10 @@ export default function Navbar() {
 			<NavLogoWrapper>
 				<NavLink href={'/'}>
 					<Image
-						width={30}
+						width={50}
 						height={30}
 						alt="Logo"
-						src={globalTheme === ThemeMode.DARK ? './vercel.svg' : './window.svg'}
+						src={globalTheme === ThemeMode.DARK ? './globe.svg' : './next.svg'}
 					/>
 				</NavLink>
 			</NavLogoWrapper>
