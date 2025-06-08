@@ -8,16 +8,26 @@ import {
 	Subscribe,
 	LogIn,
 } from './styles';
-import { navLinks } from './content';
+import { navLinks } from './contents';
 import Image from 'next/image';
 import ThemeToggler from '@/components/themeToggler';
+import { useAtomValue } from 'jotai';
+import { globalThemeAtom } from '@/globals/states';
+import { ThemeMode } from '@/globals/types';
 
 export default function Navbar() {
+	const globalTheme = useAtomValue(globalThemeAtom);
+
 	return (
 		<Nav>
 			<NavLogoWrapper>
 				<NavLink href={'/'}>
-					<Image width={30} height={30} alt="logo" src={'./vercel.svg'} />
+					<Image
+						width={30}
+						height={30}
+						alt="logo"
+						src={globalTheme === ThemeMode.DARK ? './vercel.svg' : './window.svg'}
+					/>
 				</NavLink>
 			</NavLogoWrapper>
 			<NavList>
