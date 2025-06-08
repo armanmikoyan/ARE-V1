@@ -12,7 +12,11 @@ function ThemeToggle() {
 	const toggleSound = useRef<HTMLAudioElement | null>(null);
 
 	const toggleTheme = () => {
-		setGlobalTheme((prev) => (prev === ThemeMode.DARK ? ThemeMode.LIGHT : ThemeMode.DARK));
+		setGlobalTheme((prev) => {
+			const newTheme = prev === ThemeMode.DARK ? ThemeMode.LIGHT : ThemeMode.DARK;
+			localStorage.setItem('themeMode', newTheme);
+			return newTheme;
+		});
 
 		if (toggleSound.current) {
 			toggleSound.current.currentTime = 0;
