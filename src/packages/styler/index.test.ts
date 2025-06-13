@@ -1,39 +1,118 @@
 import styler, { generateRangeMediaQuery, parseKey } from './index';
 
-describe('styler', () => {
-	it('returns base styles when no responsive values', () => {
+describe('styler - non-responsive styles', () => {
+	it('returns plain styles unchanged when no breakpoint keys are used', () => {
 		expect(
 			styler({
-				color: 'red',
-				margin: '10px',
-			}),
-		).toEqual({
-			color: 'red',
-			margin: '10px',
-		});
-	});
-
-	it('handles responsive values with base _ only', () => {
-		expect(
-			styler({
-				color: { _: 'blue' },
-				padding: { _: '5px' },
-			}),
-		).toEqual({
-			color: 'blue',
-			padding: '5px',
-		});
-	});
-
-	it('handles exact breakpoint keys', () => {
-		expect(
-			styler({
-				color: { _: 'black', sm: 'red', md: 'green' },
+				color: 'black',
+				margin: '0.625rem',
+				padding: '0.313rem',
 			}),
 		).toEqual({
 			color: 'black',
+			margin: '0.625rem',
+			padding: '0.313rem',
+		});
+	});
+
+	it('returns styles correctly if some are responsive and some are plain', () => {
+		expect(
+			styler({
+				color: 'black',
+				margin: { _: '0.313rem', sm: '0.625rem' },
+			}),
+		).toEqual({
+			color: 'black',
+			margin: '0.313rem',
 			'@media (min-width: 40.625rem) and (max-width: 48rem)': {
-				color: 'red',
+				margin: '0.625rem',
+			},
+		});
+	});
+});
+describe('styler - mixed plain and responsive styles', () => {
+	it('returns plain styles unchanged', () => {
+		expect(
+			styler({
+				color: 'black',
+				margin: '0.625rem',
+				padding: '0.313rem',
+			}),
+		).toEqual({
+			color: 'black',
+			margin: '0.625rem',
+			padding: '0.313rem',
+		});
+	});
+
+	it('mixes plain styles with responsive breakpoint styles', () => {
+		expect(
+			styler({
+				color: 'black',
+				margin: { _: '0.313rem', sm: '0.625rem' },
+				padding: '0.5rem',
+			}),
+		).toEqual({
+			color: 'black',
+			margin: '0.313rem',
+			padding: '0.5rem',
+			'@media (min-width: 40.625rem) and (max-width: 48rem)': {
+				margin: '0.625rem',
+			},
+		});
+	});
+
+	it('mixes plain styles with operator and range breakpoint styles', () => {
+		expect(
+			styler({
+				color: 'black',
+				margin: { _: '0.313rem', '<sm': '0.188rem', 'sm:md': '0.438rem' },
+				padding: '0.5rem',
+			}),
+		).toEqual({
+			color: 'black',
+			margin: '0.313rem',
+			padding: '0.5rem',
+			'@media (max-width: 40.62rem)': {
+				margin: '0.188rem',
+			},
+			'@media (min-width: 40.625rem) and (max-width: 64rem)': {
+				margin: '0.438rem',
+			},
+		});
+	});
+});
+
+describe('styler - all combinations', () => {
+	it('applies only base (_) values with non-empty', () => {
+		expect(
+			styler({
+				color: { _: 'black' },
+			}),
+		).toEqual({
+			color: 'black',
+		});
+	});
+
+	it('applies only base (_) values with empty string', () => {
+		expect(
+			styler({
+				color: { _: '' },
+			}),
+		).toEqual({
+			color: '',
+		});
+	});
+
+	it('applies only exact breakpoints with base empty string', () => {
+		expect(
+			styler({
+				color: { _: null, sm: 'blue', md: 'green' },
+			}),
+		).toEqual({
+			color: null,
+			'@media (min-width: 40.625rem) and (max-width: 48rem)': {
+				color: 'blue',
 			},
 			'@media (min-width: 48rem) and (max-width: 64rem)': {
 				color: 'green',
@@ -41,47 +120,166 @@ describe('styler', () => {
 		});
 	});
 
-	it('handles operator keys like <sm and lg>', () => {
+	it('applies only operator (<, >) breakpoints with base empty string', () => {
 		expect(
 			styler({
-				fontSize: { _: '12px', '<sm': '10px', 'lg>': '18px' },
+				color: { _: '', '<sm': 'gray', 'md>': 'red' },
 			}),
 		).toEqual({
-			fontSize: '12px',
+			color: '',
 			'@media (max-width: 40.62rem)': {
-				fontSize: '10px',
+				color: 'gray',
 			},
-			'@media (min-width: 64rem)': {
-				fontSize: '18px',
+			'@media (min-width: 48rem)': {
+				color: 'red',
 			},
 		});
 	});
 
-	it('handles range keys like sm:md', () => {
+	it('applies only range breakpoints with base empty string', () => {
 		expect(
 			styler({
-				margin: { _: '0', 'sm:md': '10px' },
+				color: { _: '', 'sm:md': 'orange' },
 			}),
 		).toEqual({
-			margin: '0',
+			color: '',
 			'@media (min-width: 40.625rem) and (max-width: 64rem)': {
-				margin: '10px',
+				color: 'orange',
 			},
 		});
 	});
 
-	it('does not overwrite exact keys with operator keys', () => {
+	it('base + exact: exact overrides base', () => {
 		expect(
 			styler({
-				color: { _: 'black', sm: 'red', '<sm': 'blue' },
+				color: { _: 'black', sm: 'blue' },
 			}),
 		).toEqual({
 			color: 'black',
 			'@media (min-width: 40.625rem) and (max-width: 48rem)': {
-				color: 'red',
-			},
-			'@media (max-width: 40.62rem)': {
 				color: 'blue',
+			},
+		});
+	});
+
+	it('base + operator: operator overrides base in its range', () => {
+		expect(
+			styler({
+				color: { _: 'black', '<sm': 'gray' },
+			}),
+		).toEqual({
+			color: 'black',
+			'@media (max-width: 40.62rem)': {
+				color: 'gray',
+			},
+		});
+	});
+
+	it('base + range: range overrides base in its range', () => {
+		expect(
+			styler({
+				color: { _: 'black', 'sm:md': 'orange' },
+			}),
+		).toEqual({
+			color: 'black',
+			'@media (min-width: 40.625rem) and (max-width: 64rem)': {
+				color: 'orange',
+			},
+		});
+	});
+
+	it('operator + exact: exact overrides operator', () => {
+		expect(
+			styler({
+				color: { _: '', '<md': 'gray', md: 'green' },
+			}),
+		).toEqual({
+			color: '',
+			'@media (max-width: 47.99rem)': {
+				color: 'gray',
+			},
+			'@media (min-width: 48rem) and (max-width: 64rem)': {
+				color: 'green',
+			},
+		});
+	});
+
+	it('operator + range: range overrides operator when overlapping', () => {
+		expect(
+			styler({
+				color: { _: '', '<lg': 'gray', 'sm:md': 'orange' },
+			}),
+		).toEqual({
+			color: '',
+			'@media (max-width: 63.99rem)': {
+				color: 'gray',
+			},
+			'@media (min-width: 40.625rem) and (max-width: 64rem)': {
+				color: 'orange',
+			},
+		});
+	});
+
+	it('range + exact: exact overrides range when overlapping', () => {
+		expect(
+			styler({
+				color: { _: '', 'sm:md': 'orange', md: 'green' },
+			}),
+		).toEqual({
+			color: '',
+			'@media (min-width: 40.625rem) and (max-width: 64rem)': {
+				color: 'orange',
+			},
+			'@media (min-width: 48rem) and (max-width: 64rem)': {
+				color: 'green',
+			},
+		});
+	});
+
+	it('all types together: exact > range > operator > base', () => {
+		expect(
+			styler({
+				color: {
+					_: 'black',
+					'<md': 'gray',
+					'sm:md': 'orange',
+					md: 'green',
+				},
+			}),
+		).toEqual({
+			color: 'black',
+			'@media (max-width: 47.99rem)': {
+				color: 'gray',
+			},
+			'@media (min-width: 40.625rem) and (max-width: 64rem)': {
+				color: 'orange',
+			},
+			'@media (min-width: 48rem) and (max-width: 64rem)': {
+				color: 'green',
+			},
+		});
+	});
+
+	it('does not override exact value with operator or range', () => {
+		expect(
+			styler({
+				margin: {
+					_: '0.313rem',
+					'<md': '0.375rem',
+					'sm:md': '0.5rem',
+					sm: '0.625rem',
+				},
+			}),
+		).toEqual({
+			margin: '0.313rem',
+			'@media (max-width: 47.99rem)': {
+				margin: '0.375rem',
+			},
+			'@media (min-width: 40.625rem) and (max-width: 64rem)': {
+				margin: '0.5rem',
+			},
+			'@media (min-width: 40.625rem) and (max-width: 48rem)': {
+				margin: '0.625rem',
 			},
 		});
 	});
