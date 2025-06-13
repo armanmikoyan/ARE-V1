@@ -7,8 +7,8 @@
 | `utils.ts`       | Utility/helper functions scoped to this component.                  |
 | `utils.test.js`  | Unit tests for the utility functions.                               |
 | `types.ts`       | TypeScript type/interface/enums declarations used in the component. |
-| `states.ts`      | Local Jotai atomsused in this component.                            |
 | `contents.ts`    | Local Contents for dynamic mapping                                  |
+| `states.ts`      | Local Jotai atomsused in this component.                            |
 
 ---
 
