@@ -19,6 +19,7 @@
 	--font-weight-black: 900;
 
 	/* Font Sizes */
+	--font-size-xs-extra: 0.5rem;
 	--font-size-xs: 0.75rem;
 	--font-size-sm: 0.875rem;
 	--font-size-md: 1rem;
