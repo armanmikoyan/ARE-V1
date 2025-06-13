@@ -1,10 +1,18 @@
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
+import sx from '@/packages/styler';
 
-export const Toggler = styled(Button)({
-	color: 'var(--color-accent)',
-	transition: 'color 0.8s ease, color 0.3s ease',
-	'&:hover': {
-		color: 'var(--color-text-primary)',
-	},
-});
+export const Toggler = styled(Button)(
+	sx({
+		color: 'var(--color-accent)',
+		transition: 'color 0.8s ease, color 0.3s ease',
+		'&:hover': {
+			color: 'var(--color-text-primary)',
+		},
+		padding: {
+			_: null,
+			'<md': '0',
+		},
+		minWidth: 'fit-content',
+	}),
+);

@@ -10,12 +10,18 @@ export const Nav = styled.nav(
 		alignItems: 'center',
 		backgroundColor: 'transparent',
 		backdropFilter: 'blur(0.2rem)',
-		padding: '1rem 3rem',
+		padding: {
+			_: '1rem 3rem',
+			'<md': '1rem 2rem',
+		},
 		boxShadow: '0 0.1rem 1rem var(--color-primary)',
 		fontWeight: 'var(--font-weight-bold)',
 		borderBottomLeftRadius: 'var(--radius-xxxl)',
 		borderBottomRightRadius: 'var(--radius-xxxl)',
-		fontSize: 'var(--font-size-sm)',
+		fontSize: {
+			_: 'var(--font-size-sm)',
+			'<lg': 'var(--font-size-xs)',
+		},
 		position: 'sticky',
 		top: '0',
 	}),
@@ -26,7 +32,10 @@ export const NavLogoWrapper = styled.div(sx({}));
 export const NavList = styled.ul(
 	sx({
 		display: 'flex',
-		gap: '2rem',
+		gap: {
+			_: '2rem',
+			'<lg': '0.5rem',
+		},
 		listStyleType: 'none',
 	}),
 );
@@ -35,7 +44,11 @@ export const NavItem = styled.li(
 	sx({
 		position: 'relative',
 		cursor: 'pointer',
-		padding: '0.5rem 1rem',
+		padding: {
+			_: '0.5rem 1rem',
+			'<lg': '0.5rem',
+			'<sm': '0.3rem',
+		},
 		transition: 'color 0.3s ease',
 		'&::after': {
 			content: '""',
@@ -61,7 +74,11 @@ export const NavLink = styled(Link)(sx({}));
 export const ActionWrapper = styled.div(
 	sx({
 		display: 'flex',
-		gap: '1rem',
+		alignItems: 'center',
+		gap: {
+			_: '1rem',
+			'<lg': '0.5rem',
+		},
 	}),
 );
 
@@ -74,6 +91,14 @@ export const Subscribe = styled(Button)(
 		'&:hover': {
 			backgroundColor: 'var(--color-secondary)',
 		},
+		fontSize: {
+			_: 'var(--font-size-sm)',
+			'<lg': 'var(--font-size-xs)',
+		},
+		padding: {
+			_: null,
+			'<lg': '0.2rem 0.8rem',
+		},
 	}),
 );
 
@@ -85,6 +110,14 @@ export const LogIn = styled(Button)(
 		transition: 'border 0.3s ease, opacity 0.3s ease',
 		'&:hover': {
 			opacity: '0.7',
+		},
+		fontSize: {
+			_: 'var(--font-size-sm)',
+			'<lg': 'var(--font-size-xs)',
+		},
+		padding: {
+			_: null,
+			'<lg': '0.2rem 0.8rem',
 		},
 	}),
 );
