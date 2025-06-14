@@ -11,19 +11,20 @@ export const Nav = styled.nav(
 		backgroundColor: 'transparent',
 		backdropFilter: 'blur(0.2rem)',
 		padding: {
-			_: '1rem 3rem',
-			'<md': '1rem 2rem',
+			_: '0.8rem 3rem',
+			'<md': '0.8rem 2rem',
 		},
 		boxShadow: '0 0.1rem 1rem var(--color-primary)',
 		fontWeight: 'var(--font-weight-bold)',
-		borderBottomLeftRadius: 'var(--radius-xxxl)',
-		borderBottomRightRadius: 'var(--radius-xxxl)',
+		margin: '1.5rem auto',
+		borderRadius: 'var(--radius-xxxl)',
+		width: '90%',
 		fontSize: {
 			_: 'var(--font-size-sm)',
 			'<lg': 'var(--font-size-xs)',
 		},
 		position: 'sticky',
-		top: '0',
+		top: '1.5rem',
 	}),
 );
 
