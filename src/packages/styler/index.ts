@@ -24,14 +24,17 @@ export const breakpointRanges = {
 export type ResponsiveValue<T> = T | { _: T; [key: string]: T };
 
 /**
- * Generate a CSS media query string from a breakpoint range.
+ * Generate a CSS media query string from a breakpoint range,
+ * with support for operators:
+ *
+ * Operators:
+ * - `<`: max-width strictly below the breakpoint's lower bound (lowerBound - 0.01rem)
+ * - `>`: min-width strictly above the breakpoint's upper bound (upperBound + 0.01rem)
+ * - `null`: min-width + max-width range (or just min-width if no upper bound)
  *
  * @param range - Tuple of min and optional max rem values.
- * @param operator - Optional operator:
- *   - `null` (default): min-max range query,
- *   - `'<':` max-width just below min breakpoint,
- *   - `'>':` min-width from min breakpoint.
- * @param maxRange - Optional max rem override.
+ * @param operator - Optional operator: `<`, `>`, or null.
+ * @param maxRange - Optional max rem override for range queries.
  * @returns CSS media query string.
  */
 export function generateRangeMediaQuery(
@@ -44,15 +47,21 @@ export function generateRangeMediaQuery(
 	const maxRem = max !== undefined ? `${max}rem` : null;
 
 	if (operator === '<') {
+		// max-width just below lower bound (strictly less than lower bound)
 		if (min !== undefined) {
 			const maxWidth = (min - 0.01).toFixed(2) + 'rem';
 			return `@media (max-width: ${maxWidth})`;
 		}
 	} else if (operator === '>') {
-		if (min !== undefined) {
-			return `@media (min-width: ${minRem})`;
+		// min-width just above upper bound (strictly greater than upper bound),
+		// or if upper bound is undefined, use min instead
+		const base = max !== undefined ? max : min;
+		if (base !== undefined) {
+			const minWidth = (base + 0.01).toFixed(2) + 'rem';
+			return `@media (min-width: ${minWidth})`;
 		}
 	} else {
+		// Normal range query
 		if (maxRange !== undefined) {
 			return `@media (min-width: ${minRem}) and (max-width: ${maxRange}rem)`;
 		}
@@ -65,7 +74,6 @@ export function generateRangeMediaQuery(
 
 	return '';
 }
-
 /**
  * Parse a responsive key string into operator and breakpoint info.
  *
@@ -74,7 +82,7 @@ export function generateRangeMediaQuery(
  * - Less than breakpoint: "<sm"
  * - Greater than breakpoint: "lg>"
  * - Range between breakpoints: "sm:md"
- * - Exact breakpoint: "xs(small range)"
+ * - Exact breakpoint: "xs"
  *
  * @param key - Responsive key string.
  * @returns Object with `operator`, `key`, and optional `rangeEnd`.
@@ -110,20 +118,20 @@ export function parseKey(key: string): {
  * - Greater than breakpoints (e.g. "lg>").
  * - Ranges between breakpoints (e.g. "sm:md").
  *
- * The base key `_` is mandatory; you can pass `""` or `null` if no base style is needed..
+ * The base key `_` is mandatory; you can pass `""` or `null` if no base style is needed.
  * Priority order when styles overlap:
  * 1. Exact breakpoint keys (e.g. "sm") — highest priority, override others within their media query.
  * 2. Range keys (e.g. "sm:md") — override operator keys but are overridden by exact keys.
  * 3. Operator keys (e.g. "<sm", "lg>") — override the base style within their ranges.
  * 4. Base key `_` — lowest priority, applies globally unless overridden.
+ *
  * @param styles - Object mapping CSS properties to responsive values.
  * @returns Flattened style object with media queries.
  */
 export default function styler(styles: Record<string, ResponsiveValue<unknown>>) {
 	const baseStyles: Record<string, any> = {};
 
-	// Use three buckets for media queries, to ensure correct override priority
-	// Lower number = lower priority = applied earlier
+	// Buckets for media queries by priority to ensure correct override order
 	const mediaBuckets: Record<number, Record<string, Record<string, any>>> = {
 		1: {}, // operator keys: <sm, lg>, etc. (lowest priority)
 		2: {}, // range keys: sm:md (medium priority)
