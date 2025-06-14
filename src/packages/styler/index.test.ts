@@ -1,5 +1,87 @@
 import styler, { generateRangeMediaQuery, parseKey } from './index';
 
+describe('styler - operator < and > applied to all breakpoints with adjusted bounds', () => {
+	it('applies <xxs and xxs> operators', () => {
+		expect(styler({ padding: { _: '1rem', '<xxs': '0.25rem', 'xxs>': '1.5rem' } })).toEqual({
+			padding: '1rem',
+			'@media (max-width: 19.99rem)': { padding: '0.25rem' },
+			'@media (min-width: 30.01rem)': { padding: '1.5rem' },
+		});
+	});
+
+	it('applies <xs and xs> operators', () => {
+		expect(styler({ padding: { _: '1rem', '<xs': '0.25rem', 'xs>': '1.5rem' } })).toEqual({
+			padding: '1rem',
+			'@media (max-width: 29.99rem)': { padding: '0.25rem' },
+			'@media (min-width: 40.63rem)': { padding: '1.5rem' },
+		});
+	});
+
+	it('applies <sm and sm> operators', () => {
+		expect(styler({ padding: { _: '1rem', '<sm': '0.25rem', 'sm>': '1.5rem' } })).toEqual({
+			padding: '1rem',
+			'@media (max-width: 40.62rem)': { padding: '0.25rem' },
+			'@media (min-width: 48.01rem)': { padding: '1.5rem' },
+		});
+	});
+
+	it('applies <smd and smd> operators (single value range)', () => {
+		expect(styler({ padding: { _: '1rem', '<smd': '0.25rem', 'smd>': '1.5rem' } })).toEqual({
+			padding: '1rem',
+			'@media (max-width: 61.24rem)': { padding: '0.25rem' },
+			'@media (min-width: 61.26rem)': { padding: '1.5rem' },
+		});
+	});
+
+	it('applies <md and md> operators', () => {
+		expect(styler({ padding: { _: '1rem', '<md': '0.25rem', 'md>': '1.5rem' } })).toEqual({
+			padding: '1rem',
+			'@media (max-width: 47.99rem)': { padding: '0.25rem' },
+			'@media (min-width: 64.01rem)': { padding: '1.5rem' },
+		});
+	});
+
+	it('applies <lg and lg> operators', () => {
+		expect(styler({ padding: { _: '1rem', '<lg': '0.25rem', 'lg>': '1.5rem' } })).toEqual({
+			padding: '1rem',
+			'@media (max-width: 63.99rem)': { padding: '0.25rem' },
+			'@media (min-width: 73.76rem)': { padding: '1.5rem' },
+		});
+	});
+
+	it('applies <xlg and xlg> operators', () => {
+		expect(styler({ padding: { _: '1rem', '<xlg': '0.25rem', 'xlg>': '1.5rem' } })).toEqual({
+			padding: '1rem',
+			'@media (max-width: 73.74rem)': { padding: '0.25rem' },
+			'@media (min-width: 75.01rem)': { padding: '1.5rem' },
+		});
+	});
+
+	it('applies <xxlg and xxlg> operators', () => {
+		expect(styler({ padding: { _: '1rem', '<xxlg': '0.25rem', 'xxlg>': '1.5rem' } })).toEqual({
+			padding: '1rem',
+			'@media (max-width: 74.99rem)': { padding: '0.25rem' },
+			'@media (min-width: 90.01rem)': { padding: '1.5rem' },
+		});
+	});
+
+	it('applies <xxxlg and xxxlg> operators', () => {
+		expect(styler({ padding: { _: '1rem', '<xxxlg': '0.25rem', 'xxxlg>': '1.5rem' } })).toEqual({
+			padding: '1rem',
+			'@media (max-width: 89.99rem)': { padding: '0.25rem' },
+			'@media (min-width: 100.01rem)': { padding: '1.5rem' },
+		});
+	});
+
+	it('applies <xxxxlg and xxxxlg> with correct bounds', () => {
+		expect(styler({ fontSize: { _: '1rem', '<xxxxlg': '0.75rem', 'xxxxlg>': '2rem' } })).toEqual({
+			fontSize: '1rem',
+			'@media (max-width: 99.99rem)': { fontSize: '0.75rem' },
+			'@media (min-width: 100.01rem)': { fontSize: '2rem' },
+		});
+	});
+});
+
 describe('styler - non-responsive styles', () => {
 	it('returns plain styles unchanged when no breakpoint keys are used', () => {
 		expect(
@@ -30,6 +112,7 @@ describe('styler - non-responsive styles', () => {
 		});
 	});
 });
+
 describe('styler - mixed plain and responsive styles', () => {
 	it('returns plain styles unchanged', () => {
 		expect(
@@ -84,7 +167,7 @@ describe('styler - mixed plain and responsive styles', () => {
 });
 
 describe('styler - all combinations', () => {
-	it('applies only base (_) values with non-empty', () => {
+	it('applies only base (_) values with non-empty string', () => {
 		expect(
 			styler({
 				color: { _: 'black' },
@@ -104,7 +187,7 @@ describe('styler - all combinations', () => {
 		});
 	});
 
-	it('applies only exact breakpoints with base empty string', () => {
+	it('applies exact breakpoints with base null', () => {
 		expect(
 			styler({
 				color: { _: null, sm: 'blue', md: 'green' },
@@ -120,7 +203,7 @@ describe('styler - all combinations', () => {
 		});
 	});
 
-	it('applies only operator (<, >) breakpoints with base empty string', () => {
+	it('applies operator breakpoints (<, >) with base empty string', () => {
 		expect(
 			styler({
 				color: { _: '', '<sm': 'gray', 'md>': 'red' },
@@ -130,13 +213,13 @@ describe('styler - all combinations', () => {
 			'@media (max-width: 40.62rem)': {
 				color: 'gray',
 			},
-			'@media (min-width: 48rem)': {
+			'@media (min-width: 64.01rem)': {
 				color: 'red',
 			},
 		});
 	});
 
-	it('applies only range breakpoints with base empty string', () => {
+	it('applies range breakpoints with base empty string', () => {
 		expect(
 			styler({
 				color: { _: '', 'sm:md': 'orange' },
@@ -149,7 +232,7 @@ describe('styler - all combinations', () => {
 		});
 	});
 
-	it('base + exact: exact overrides base', () => {
+	it('base + exact: exact overrides base in breakpoint range', () => {
 		expect(
 			styler({
 				color: { _: 'black', sm: 'blue' },
@@ -188,7 +271,7 @@ describe('styler - all combinations', () => {
 		});
 	});
 
-	it('operator + exact: exact overrides operator', () => {
+	it('operator + exact: exact overrides operator in overlapping ranges', () => {
 		expect(
 			styler({
 				color: { _: '', '<md': 'gray', md: 'green' },
@@ -236,7 +319,7 @@ describe('styler - all combinations', () => {
 		});
 	});
 
-	it('all types together: exact > range > operator > base', () => {
+	it('all types together: exact > range > operator > base precedence', () => {
 		expect(
 			styler({
 				color: {
@@ -291,22 +374,43 @@ describe('generateRangeMediaQuery', () => {
 			'@media (min-width: 40rem) and (max-width: 50rem)',
 		);
 	});
-	it('generates min only when max equals min', () => {
+
+	it('generates min-only when min equals max', () => {
 		expect(generateRangeMediaQuery([61.25, 61.25])).toBe('@media (min-width: 61.25rem)');
 	});
-	it('generates min only if max is undefined', () => {
+
+	it('generates min-only if max is undefined', () => {
 		expect(generateRangeMediaQuery([100])).toBe('@media (min-width: 100rem)');
 	});
-	it('generates max-width query with < operator', () => {
+
+	it('generates max-width query for < operator', () => {
 		expect(generateRangeMediaQuery([40, 50], '<')).toBe('@media (max-width: 39.99rem)');
 	});
-	it('generates min-width query with > operator', () => {
-		expect(generateRangeMediaQuery([64], '>')).toBe('@media (min-width: 64rem)');
+
+	it('generates min-width query for > operator', () => {
+		expect(generateRangeMediaQuery([64], '>')).toBe('@media (min-width: 64.01rem)');
 	});
+
 	it('generates media query with maxRange override', () => {
 		expect(generateRangeMediaQuery([40, 50], null, 55)).toBe(
 			'@media (min-width: 40rem) and (max-width: 55rem)',
 		);
+	});
+
+	it('generates max-width query for < operator on single-value range', () => {
+		expect(generateRangeMediaQuery([100], '<')).toBe('@media (max-width: 99.99rem)');
+	});
+
+	it('generates min-width query for > operator on single-value range', () => {
+		expect(generateRangeMediaQuery([100], '>')).toBe('@media (min-width: 100.01rem)');
+	});
+
+	it('generates min-width query for > operator with min and max both defined', () => {
+		expect(generateRangeMediaQuery([75, 90], '>')).toBe('@media (min-width: 90.01rem)');
+	});
+
+	it('generates max-width query for < operator with min and max both defined', () => {
+		expect(generateRangeMediaQuery([30, 40.625], '<')).toBe('@media (max-width: 29.99rem)');
 	});
 });
 
