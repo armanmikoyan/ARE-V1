@@ -26,7 +26,7 @@ const collapseAnimation = keyframes`
   }
 `;
 
-export const SidebarWrapper = styled.nav<{ isExpanded: boolean }>(
+export const SidebarWrapper = styled.nav(
 	sx({
 		display: {
 			_: 'flex',
@@ -61,7 +61,7 @@ export const SidebarWrapper = styled.nav<{ isExpanded: boolean }>(
 
 export const SidebarLogoWrapper = styled.div(sx({}));
 
-export const SidebarList = styled.ul<{ isExpanded: boolean }>(
+export const SidebarList = styled.ul(
 	sx({
 		display: ({ isExpanded }) => (isExpanded ? 'flex' : 'none'),
 		flexDirection: 'column',
