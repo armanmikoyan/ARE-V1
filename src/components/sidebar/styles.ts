@@ -1,9 +1,32 @@
-import { Button } from '@mui/material';
+import { Button, IconButton } from '@mui/material';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 import sx from '@/packages/styler';
+import { keyframes } from '@emotion/react';
 
-export const SidebarWrapper = styled.nav(
+const expandAnimation = keyframes`
+  from {
+    height: 7rem;
+
+  }
+  to {
+    height: 31rem;
+
+  }
+`;
+
+const collapseAnimation = keyframes`
+  from {
+    height: 31rem;
+
+  }
+  to {
+    height: 7rem;
+
+  }
+`;
+
+export const SidebarWrapper = styled.nav<{ isExpanded: boolean }>(
 	sx({
 		display: {
 			_: 'flex',
@@ -12,29 +35,35 @@ export const SidebarWrapper = styled.nav(
 		},
 		flexDirection: 'column',
 		alignItems: 'center',
+		justifyContent: 'space-between',
 		backgroundColor: 'transparent',
 		backdropFilter: 'blur(0.2rem)',
-		padding: '2rem 0.3rem',
+		padding: '2rem 0.3rem 0.3rem 0.3rem;',
 		boxShadow: '0 0.1rem 1rem var(--color-primary)',
 		fontWeight: 'var(--font-weight-bold)',
 		margin: '1.5rem ',
+		marginTop: '0',
 		borderRadius: 'var(--radius-xxxl)',
-		width: 'fit-content',
 		fontSize: {
 			_: 'var(--font-size-sm)',
 			'<lg': 'var(--font-size-xs)',
 		},
 		position: 'sticky',
 		top: '1.5rem',
-		gap: '3rem',
+		width: '5rem',
+		height: ({ isExpanded }) => (isExpanded ? '31rem' : '7rem'),
+		animation: ({ isExpanded }) =>
+			isExpanded
+				? `${expandAnimation} 0.5s ease forwards`
+				: `${collapseAnimation} 0.5s ease forwards`,
 	}),
 );
 
 export const SidebarLogoWrapper = styled.div(sx({}));
 
-export const SidebarList = styled.ul(
+export const SidebarList = styled.ul<{ isExpanded: boolean }>(
 	sx({
-		display: 'flex',
+		display: ({ isExpanded }) => (isExpanded ? 'flex' : 'none'),
 		flexDirection: 'column',
 		alignItems: 'center',
 		gap: '1.3rem',
@@ -75,7 +104,7 @@ export const ActionWrapper = styled.div(
 		flexDirection: 'column',
 		alignItems: 'center',
 
-		gap: '1rem',
+		gap: '0.5rem',
 	}),
 );
 
@@ -96,5 +125,21 @@ export const Subscribe = styled(Button)(
 			_: null,
 			'<lg': '0.2rem 0.8rem',
 		},
+	}),
+);
+
+export const ButtonGroup = styled.div(
+	sx({
+		display: ({ isExpanded }) => (isExpanded ? 'flex' : 'none'),
+		flexDirection: 'column',
+		alignItems: 'center',
+		gap: '1rem',
+	}),
+);
+
+export const Expand = styled(IconButton)(
+	sx({
+		color: 'var(--color-accent)',
+		padding: '0.5rem',
 	}),
 );
