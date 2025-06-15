@@ -3,8 +3,8 @@ import { navLinks } from './contents';
 import Image from 'next/image';
 import ThemeToggler from '@/components/themeToggler';
 import { useAtomValue } from 'jotai';
-import { globalThemeAtom } from '@/globals/states';
 import { ThemeMode } from '@/globals/types';
+import { globalThemeAtom } from '@/globals/states';
 
 export default function Navbar() {
 	const globalTheme = useAtomValue(globalThemeAtom);
