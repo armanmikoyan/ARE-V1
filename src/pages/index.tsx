@@ -28,7 +28,6 @@ export default function Home({ data }) {
 
 export async function getStaticProps(ctx: GetServerSidePropsContext) {
 	void ctx;
-	console.log(ctx);
 	return {
 		props: {
 			data: [1, 2, 3],
