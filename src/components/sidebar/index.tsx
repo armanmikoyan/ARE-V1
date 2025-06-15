@@ -1,4 +1,12 @@
-import { Nav, NavList, NavItem, NavLink, NavLogoWrapper, ActionWrapper, Subscribe } from './styles';
+import {
+	SidebarWrapper,
+	SidebarList,
+	SidebarItem,
+	SidebarLink,
+	SidebarLogoWrapper,
+	ActionWrapper,
+	Subscribe,
+} from './styles';
 import { navLinks } from './contents';
 import Image from 'next/image';
 import ThemeToggler from '@/components/themeToggler';
@@ -6,34 +14,34 @@ import { useAtomValue } from 'jotai';
 import { globalThemeAtom } from '@/globals/states';
 import { ThemeMode } from '@/globals/types';
 
-export default function Navbar() {
+export default function Sidebar() {
 	const globalTheme = useAtomValue(globalThemeAtom);
 
 	return (
-		<Nav>
-			<NavLogoWrapper>
-				<NavLink href={'/'}>
+		<SidebarWrapper>
+			<SidebarLogoWrapper>
+				<SidebarLink href={'/'}>
 					<Image
 						width={50}
 						height={30}
 						alt="Logo"
 						src={globalTheme === ThemeMode.DARK ? './globe.svg' : './next.svg'}
 					/>
-				</NavLink>
-			</NavLogoWrapper>
-			<NavList>
+				</SidebarLink>
+			</SidebarLogoWrapper>
+			<SidebarList>
 				{navLinks.map(({ label, href }, id) => {
 					return (
-						<NavItem key={id}>
-							<NavLink href={href}>{label}</NavLink>
-						</NavItem>
+						<SidebarItem key={id}>
+							<SidebarLink href={href}>{label}</SidebarLink>
+						</SidebarItem>
 					);
 				})}
-			</NavList>
+			</SidebarList>
 			<ActionWrapper>
 				<Subscribe variant="contained">Join</Subscribe>
 				<ThemeToggler />
 			</ActionWrapper>
-		</Nav>
+		</SidebarWrapper>
 	);
 }
