@@ -1,6 +1,6 @@
+import Image from 'next/image';
 import { Nav, NavList, NavItem, NavLink, NavLogoWrapper, ActionWrapper, Subscribe } from './styles';
 import { navLinks } from './contents';
-import Image from 'next/image';
 import ThemeToggler from '@/components/themeToggler';
 import { useAtomValue } from 'jotai';
 import { ThemeMode } from '@/globals/types';
