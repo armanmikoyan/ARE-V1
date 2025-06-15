@@ -3,57 +3,50 @@ import styled from '@emotion/styled';
 import Link from 'next/link';
 import sx from '@/packages/styler';
 
-export const Nav = styled.nav(
+export const SidebarWrapper = styled.nav(
 	sx({
 		display: {
 			_: 'flex',
-			'<sm': 'none',
+			'sm>': 'none',
+			sm: 'none',
 		},
-		justifyContent: 'space-between',
+		flexDirection: 'column',
 		alignItems: 'center',
 		backgroundColor: 'transparent',
 		backdropFilter: 'blur(0.2rem)',
-		padding: {
-			_: '0.8rem 3rem',
-			'<md': '0.8rem 2rem',
-		},
+		padding: '2rem 0.3rem',
 		boxShadow: '0 0.1rem 1rem var(--color-primary)',
 		fontWeight: 'var(--font-weight-bold)',
-		margin: '1.5rem auto',
+		margin: '1.5rem ',
 		borderRadius: 'var(--radius-xxxl)',
-		width: '90%',
-		maxWidth: '57rem',
+		width: 'fit-content',
 		fontSize: {
 			_: 'var(--font-size-sm)',
 			'<lg': 'var(--font-size-xs)',
 		},
 		position: 'sticky',
 		top: '1.5rem',
+		gap: '3rem',
 	}),
 );
 
-export const NavLogoWrapper = styled.div(sx({}));
+export const SidebarLogoWrapper = styled.div(sx({}));
 
-export const NavList = styled.ul(
+export const SidebarList = styled.ul(
 	sx({
 		display: 'flex',
-		gap: {
-			_: '2rem',
-			'<lg': '0.5rem',
-		},
+		flexDirection: 'column',
+		alignItems: 'center',
+		gap: '1.3rem',
 		listStyleType: 'none',
 	}),
 );
 
-export const NavItem = styled.li(
+export const SidebarItem = styled.li(
 	sx({
 		position: 'relative',
 		cursor: 'pointer',
-		padding: {
-			_: '0.5rem 1rem',
-			'<lg': '0.5rem',
-			'<sm': '0.3rem',
-		},
+		padding: '0.3rem',
 		transition: 'color 0.3s ease',
 		'&::after': {
 			content: '""',
@@ -74,16 +67,15 @@ export const NavItem = styled.li(
 	}),
 );
 
-export const NavLink = styled(Link)(sx({}));
+export const SidebarLink = styled(Link)(sx({}));
 
 export const ActionWrapper = styled.div(
 	sx({
 		display: 'flex',
+		flexDirection: 'column',
 		alignItems: 'center',
-		gap: {
-			_: '1rem',
-			'<lg': '0.5rem',
-		},
+
+		gap: '1rem',
 	}),
 );
 
