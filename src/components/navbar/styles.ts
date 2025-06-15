@@ -20,6 +20,7 @@ export const Nav = styled.nav(
 		boxShadow: '0 0.1rem 1rem var(--color-primary)',
 		fontWeight: 'var(--font-weight-bold)',
 		margin: '1.5rem auto',
+		marginTop: '0',
 		borderRadius: 'var(--radius-xxxl)',
 		width: '90%',
 		maxWidth: '57rem',
