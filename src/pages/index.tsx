@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import { GetServerSidePropsContext } from 'next';
-import { getPageData } from './_data';
 import DefaultLayout from '@/layouts/default';
 
 export default function Home({ data }) {
@@ -18,6 +17,20 @@ export default function Home({ data }) {
 	);
 }
 
-export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-	return getPageData(ctx);
+// export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+// 	void ctx;
+// 	return {
+// 		props: {
+// 			data: [1, 2, 3],
+// 		},
+// 	};
+// }
+
+export async function getStaticProps(ctx: GetServerSidePropsContext) {
+	void ctx;
+	return {
+		props: {
+			data: [1, 2, 3],
+		},
+	};
 }
