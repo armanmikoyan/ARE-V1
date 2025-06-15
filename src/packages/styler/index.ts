@@ -13,17 +13,6 @@ export const breakpointRanges = {
 } as const;
 
 /**
- * Responsive style values type.
- *
- * Can be:
- * - A single value (applies globally).
- * - An object with:
- *    - `_`: mandatory base (default) value,
- *    - breakpoint keys for responsive overrides.
- */
-export type ResponsiveValue<T> = T | { _: T; [key: string]: T };
-
-/**
  * Generate a CSS media query string from a breakpoint range,
  * with support for operators:
  *
@@ -47,21 +36,17 @@ export function generateRangeMediaQuery(
 	const maxRem = max !== undefined ? `${max}rem` : null;
 
 	if (operator === '<') {
-		// max-width just below lower bound (strictly less than lower bound)
 		if (min !== undefined) {
 			const maxWidth = (min - 0.01).toFixed(2) + 'rem';
 			return `@media (max-width: ${maxWidth})`;
 		}
 	} else if (operator === '>') {
-		// min-width just above upper bound (strictly greater than upper bound),
-		// or if upper bound is undefined, use min instead
 		const base = max !== undefined ? max : min;
 		if (base !== undefined) {
 			const minWidth = (base + 0.01).toFixed(2) + 'rem';
 			return `@media (min-width: ${minWidth})`;
 		}
 	} else {
-		// Normal range query
 		if (maxRange !== undefined) {
 			return `@media (min-width: ${minRem}) and (max-width: ${maxRange}rem)`;
 		}
@@ -74,6 +59,7 @@ export function generateRangeMediaQuery(
 
 	return '';
 }
+
 /**
  * Parse a responsive key string into operator and breakpoint info.
  *
@@ -109,6 +95,33 @@ export function parseKey(key: string): {
 }
 
 /**
+ * Helper to check if a value is a function
+ */
+function isFunction(value: unknown): value is (props: any) => any {
+	return typeof value === 'function';
+}
+
+/**
+ * Recursively resolve a value:
+ * - If function, call with props.
+ * - If object, recursively resolve each key.
+ * - Else return value as is.
+ */
+function resolveValue(value: any, props: any): any {
+	if (isFunction(value)) {
+		return value(props);
+	}
+	if (value && typeof value === 'object' && !Array.isArray(value)) {
+		const result: any = {};
+		for (const k in value) {
+			result[k] = resolveValue(value[k], props);
+		}
+		return result;
+	}
+	return value;
+}
+
+/**
  * Converts responsive style values into a flat style object with media queries.
  *
  * Style values can have keys:
@@ -120,102 +133,104 @@ export function parseKey(key: string): {
  *
  * The base key `_` is mandatory; you can pass `""` or `null` if no base style is needed.
  * Priority order when styles overlap:
- * 1. Exact breakpoint keys (e.g. "sm") — highest priority, override others within their media query.
- * 2. Range keys (e.g. "sm:md") — override operator keys but are overridden by exact keys.
- * 3. Operator keys (e.g. "<sm", "lg>") — override the base style within their ranges.
+ * 1. Operator keys (e.g. "<sm", "lg>") — lowest priority, override base style within their ranges.
+ * 2. Range keys (e.g. "sm:md") — medium priority.
+ * 3. Exact breakpoint keys (e.g. "sm") — highest priority, override all within media query.
  * 4. Base key `_` — lowest priority, applies globally unless overridden.
  *
  * @param styles - Object mapping CSS properties to responsive values.
- * @returns Flattened style object with media queries.
+ * @returns Function that takes props and returns flattened style object with media queries.
  */
-export default function styler(styles: Record<string, ResponsiveValue<unknown>>) {
-	const baseStyles: Record<string, any> = {};
+export default function sx(styles: Record<string, any>) {
+	return function (props: any) {
+		const baseStyles: Record<string, any> = {};
 
-	// Buckets for media queries by priority to ensure correct override order
-	const mediaBuckets: Record<number, Record<string, Record<string, any>>> = {
-		1: {}, // operator keys: <sm, lg>, etc. (lowest priority)
-		2: {}, // range keys: sm:md (medium priority)
-		3: {}, // exact keys: sm, md, lg (highest priority)
-	};
+		// Buckets for media queries by priority to ensure correct override order
+		const mediaBuckets: Record<number, Record<string, Record<string, any>>> = {
+			1: {}, // operator keys: <sm, lg>, etc. (lowest priority)
+			2: {}, // range keys: sm:md (medium priority)
+			3: {}, // exact keys: sm, md, lg (highest priority)
+		};
 
-	for (const prop in styles) {
-		const val = styles[prop];
+		for (const prop in styles) {
+			let val = styles[prop];
 
-		if (val && typeof val === 'object' && '_' in val) {
-			// 1. Base styles first (lowest priority)
-			baseStyles[prop] = val._;
+			// Resolve functions anywhere in val (including nested)
+			val = resolveValue(val, props);
 
-			const allKeys = Object.keys(val).filter((k) => k !== '_');
+			if (val && typeof val === 'object' && '_' in val) {
+				// Base style
+				baseStyles[prop] = val._;
 
-			// Separate keys by type
-			const operatorKeys = allKeys.filter((k) => k.startsWith('<') || k.endsWith('>'));
-			const rangeKeys = allKeys.filter((k) => k.includes(':'));
-			const exactKeys = allKeys.filter(
-				(k) => !k.startsWith('<') && !k.endsWith('>') && !k.includes(':'),
-			);
+				// Separate keys by type
+				const allKeys = Object.keys(val).filter((k) => k !== '_');
+				const operatorKeys = allKeys.filter((k) => k.startsWith('<') || k.endsWith('>'));
+				const rangeKeys = allKeys.filter((k) => k.includes(':'));
+				const exactKeys = allKeys.filter(
+					(k) => !k.startsWith('<') && !k.endsWith('>') && !k.includes(':'),
+				);
 
-			// 2. Add operator keys media queries (priority 1)
-			for (const key of operatorKeys) {
-				const { operator, key: startKey } = parseKey(key);
-				if (startKey === '_') continue;
-				const startRange = breakpointRanges[startKey as keyof typeof breakpointRanges];
-				if (!startRange) continue;
+				// 1. Operator keys (lowest priority)
+				for (const key of operatorKeys) {
+					const { operator, key: startKey } = parseKey(key);
+					if (startKey === '_') continue;
+					const startRange = breakpointRanges[startKey as keyof typeof breakpointRanges];
+					if (!startRange) continue;
 
-				const mediaQuery = generateRangeMediaQuery(startRange, operator);
-				if (mediaQuery) {
-					if (!mediaBuckets[1][mediaQuery]) mediaBuckets[1][mediaQuery] = {};
-					mediaBuckets[1][mediaQuery][prop] = val[key];
+					const mediaQuery = generateRangeMediaQuery(startRange, operator);
+					if (mediaQuery) {
+						if (!mediaBuckets[1][mediaQuery]) mediaBuckets[1][mediaQuery] = {};
+						mediaBuckets[1][mediaQuery][prop] = val[key];
+					}
 				}
-			}
 
-			// 3. Add range keys media queries (priority 2)
-			for (const key of rangeKeys) {
-				const { key: startKey, rangeEnd } = parseKey(key);
-				if (!rangeEnd) continue;
-				const startRange = breakpointRanges[startKey as keyof typeof breakpointRanges];
-				const endRange = breakpointRanges[rangeEnd as keyof typeof breakpointRanges];
-				if (!startRange || !endRange) continue;
+				// 2. Range keys (medium priority)
+				for (const key of rangeKeys) {
+					const { key: startKey, rangeEnd } = parseKey(key);
+					if (!rangeEnd) continue;
+					const startRange = breakpointRanges[startKey as keyof typeof breakpointRanges];
+					const endRange = breakpointRanges[rangeEnd as keyof typeof breakpointRanges];
+					if (!startRange || !endRange) continue;
 
-				// Max range is the max value of the end breakpoint
-				const maxRange = endRange[1] !== undefined ? endRange[1] : endRange[0];
-				const mediaQuery = generateRangeMediaQuery(startRange, null, maxRange);
+					const maxRange = endRange[1] !== undefined ? endRange[1] : endRange[0];
+					const mediaQuery = generateRangeMediaQuery(startRange, null, maxRange);
 
-				if (mediaQuery) {
-					if (!mediaBuckets[2][mediaQuery]) mediaBuckets[2][mediaQuery] = {};
-					mediaBuckets[2][mediaQuery][prop] = val[key];
+					if (mediaQuery) {
+						if (!mediaBuckets[2][mediaQuery]) mediaBuckets[2][mediaQuery] = {};
+						mediaBuckets[2][mediaQuery][prop] = val[key];
+					}
 				}
-			}
 
-			// 4. Add exact keys media queries (priority 3)
-			for (const key of exactKeys) {
-				const range = breakpointRanges[key as keyof typeof breakpointRanges];
-				if (!range) continue;
+				// 3. Exact keys (highest priority)
+				for (const key of exactKeys) {
+					const range = breakpointRanges[key as keyof typeof breakpointRanges];
+					if (!range) continue;
 
-				const mediaQuery = generateRangeMediaQuery(range);
-				if (mediaQuery) {
-					if (!mediaBuckets[3][mediaQuery]) mediaBuckets[3][mediaQuery] = {};
-					mediaBuckets[3][mediaQuery][prop] = val[key];
+					const mediaQuery = generateRangeMediaQuery(range);
+					if (mediaQuery) {
+						if (!mediaBuckets[3][mediaQuery]) mediaBuckets[3][mediaQuery] = {};
+						mediaBuckets[3][mediaQuery][prop] = val[key];
+					}
 				}
+			} else {
+				// Not an object with base key: assign as base style directly
+				baseStyles[prop] = val;
 			}
-		} else {
-			// No base or object with `_`: apply as base style directly
-			baseStyles[prop] = val;
 		}
-	}
 
-	// Merge all media queries by priority, so higher priority styles override lower ones
-	const mergedMediaStyles: Record<string, Record<string, any>> = {};
+		// Merge media queries by priority so higher priority override lower
+		const mergedMediaStyles: Record<string, Record<string, any>> = {};
 
-	for (const priority of [1, 2, 3]) {
-		for (const mediaQuery in mediaBuckets[priority]) {
-			if (!mergedMediaStyles[mediaQuery]) mergedMediaStyles[mediaQuery] = {};
-			Object.assign(mergedMediaStyles[mediaQuery], mediaBuckets[priority][mediaQuery]);
+		for (const priority of [1, 2, 3]) {
+			for (const mediaQuery in mediaBuckets[priority]) {
+				if (!mergedMediaStyles[mediaQuery]) mergedMediaStyles[mediaQuery] = {};
+				Object.assign(mergedMediaStyles[mediaQuery], mediaBuckets[priority][mediaQuery]);
+			}
 		}
-	}
 
-	// Final output: base styles + media queries
-	return {
-		...baseStyles,
-		...mergedMediaStyles,
+		return {
+			...baseStyles,
+			...mergedMediaStyles,
+		};
 	};
 }
