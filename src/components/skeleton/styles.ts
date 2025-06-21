@@ -27,7 +27,9 @@ export const SkeletonBlock = styled.div(
 			_: `${height}rem`,
 		}),
 		margin: '1rem 0 0',
-		borderRadius: 'var(--radius-md)',
+		borderRadius: ({ radius }) => ({
+			_: `${radius}rem`,
+		}),
 		backgroundPosition: '0 0',
 	}),
 );
