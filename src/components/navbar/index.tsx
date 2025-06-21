@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { Nav, NavList, NavItem, NavLink, NavLogoWrapper, ActionWrapper, Subscribe } from './styles';
 import { navLinks } from './contents';
-import ThemeToggler from '@/components/themeToggler';
+import ThemeToggler from '@/components/theme-toggler';
 import { useAtomValue } from 'jotai';
 import { ThemeMode } from '@/globals/types';
 import { globalThemeAtom } from '@/globals/states';

@@ -27,6 +27,13 @@ const eslintConfig = [
 			'@typescript-eslint/no-use-before-define': 'error',
 			'@typescript-eslint/no-explicit-any': 'off',
 			'no-unused-vars': 'off',
+			camelcase: [
+				'error',
+				{
+					properties: 'never',
+					ignoreDestructuring: true,
+				},
+			],
 			'@typescript-eslint/no-unused-vars': [
 				'error',
 				{
