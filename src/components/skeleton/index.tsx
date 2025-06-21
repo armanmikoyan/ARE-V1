@@ -10,6 +10,7 @@ import { SkeletonProps } from './types';
  * @param {string} [props.colorPrimary='var(--color-primary)'] - Primary color for the gradient.
  * @param {string} [props.colorSecondary='var(--color-secondary)'] - Secondary color for the gradient.
  * @param {string} [props.timing='1.1s infinite ease-in-out'] - CSS animation timing (duration, iteration, easing).
+ * @param {string} [props.radius='var(--radius-md)'] - Border radius for block
  * @returns {JSX.Element}
  */
 export default function Skeleton({
@@ -18,6 +19,7 @@ export default function Skeleton({
 	colorPrimary = 'var(--color-primary)',
 	colorSecondary = 'var(--color-secondary)',
 	timing = '1.1s infinite ease-in-out',
+	radius = 'var(--radius-md)',
 	...rest
 }: SkeletonProps) {
 	return (
@@ -27,6 +29,7 @@ export default function Skeleton({
 			colorPrimary={colorPrimary}
 			colorSecondary={colorSecondary}
 			timing={timing}
+			radius={radius}
 			{...rest}
 		/>
 	);

@@ -4,5 +4,6 @@ export interface SkeletonProps {
 	colorPrimary?: string;
 	colorSecondary?: string;
 	timing?: string;
+	radius?: string;
 	[key: string]: any;
 }
