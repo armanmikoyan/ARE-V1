@@ -78,15 +78,9 @@ export function parseKey(key: string): {
 	key: string;
 	rangeEnd?: string;
 } {
-	if (key === '_') {
-		return { operator: null, key: '_' };
-	}
-	if (key.startsWith('<')) {
-		return { operator: '<', key: key.slice(1) };
-	}
-	if (key.endsWith('>')) {
-		return { operator: '>', key: key.slice(0, -1) };
-	}
+	if (key === '_') return { operator: null, key: '_' };
+	if (key.startsWith('<')) return { operator: '<', key: key.slice(1) };
+	if (key.endsWith('>')) return { operator: '>', key: key.slice(0, -1) };
 	if (key.includes(':')) {
 		const [start, end] = key.split(':');
 		return { operator: null, key: start, rangeEnd: end };
@@ -108,9 +102,7 @@ function isFunction(value: unknown): value is (props: any) => any {
  * - Else return value as is.
  */
 function resolveValue(value: any, props: any): any {
-	if (isFunction(value)) {
-		return value(props);
-	}
+	if (isFunction(value)) return value(props);
 	if (value && typeof value === 'object' && !Array.isArray(value)) {
 		const result: any = {};
 		for (const k in value) {
@@ -210,6 +202,23 @@ export default function sx(styles: Record<string, any>) {
 					if (mediaQuery) {
 						if (!mediaBuckets[3][mediaQuery]) mediaBuckets[3][mediaQuery] = {};
 						mediaBuckets[3][mediaQuery][prop] = val[key];
+					}
+				}
+			} else if (val && typeof val === 'object' && !Array.isArray(val)) {
+				// Nested selector or nested style object - RECURSIVELY process it
+				const nestedResult = sx(val)(props);
+
+				// Separate base styles and media queries from nestedResult
+				for (const key in nestedResult) {
+					if (key.startsWith('@media')) {
+						// Media query: attach nested selector under this media query
+						if (!mediaBuckets[3][key]) mediaBuckets[3][key] = {};
+						if (!mediaBuckets[3][key][prop]) mediaBuckets[3][key][prop] = {};
+						Object.assign(mediaBuckets[3][key][prop], nestedResult[key]);
+					} else {
+						// Base nested style under the nested selector key
+						if (!baseStyles[prop]) baseStyles[prop] = {};
+						baseStyles[prop][key] = nestedResult[key];
 					}
 				}
 			} else {

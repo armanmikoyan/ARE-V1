@@ -4,6 +4,12 @@ export interface SkeletonProps {
 	colorPrimary?: string;
 	colorSecondary?: string;
 	timing?: string;
-	radius?: string;
+	radius?: string | number;
+	variant?: SkeletonVariant;
 	[key: string]: any;
+}
+
+export enum SkeletonVariant {
+	TEXT = 'text',
+	IMG = 'img',
 }

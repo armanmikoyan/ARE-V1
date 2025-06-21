@@ -11,7 +11,7 @@ const getEmphasizedGradient = (colorPrimary: string, colorSecondary: string) => 
 	return `linear-gradient(90deg, ${colorSecondary} 10%, ${colorPrimary} 45%, ${colorSecondary} 90%)`;
 };
 
-export const SkeletonBlock = styled.div(
+export const SkeletonText = styled.div(
 	sx({
 		background: ({ colorPrimary, colorSecondary }) => ({
 			_: getEmphasizedGradient(colorPrimary, colorSecondary),
@@ -28,8 +28,11 @@ export const SkeletonBlock = styled.div(
 		}),
 		margin: '1rem 0 0',
 		borderRadius: ({ radius }) => ({
-			_: `${radius}rem`,
+			_: typeof radius === 'number' ? `${radius}rem` : radius,
 		}),
+
 		backgroundPosition: '0 0',
 	}),
 );
+
+export const SkeletonImage = styled.div(sx({}));

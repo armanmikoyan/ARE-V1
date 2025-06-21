@@ -414,6 +414,205 @@ describe('styler - dynamic props passing', () => {
 	});
 });
 
+describe('styler - nested selectors and nested responsive styles', () => {
+	it('handles nested selectors with plain styles', () => {
+		const styles = {
+			position: 'relative',
+			'&::after': {
+				content: '""',
+				position: 'absolute',
+				width: '100%',
+			},
+		};
+
+		expect(styler(styles)({})).toEqual({
+			position: 'relative',
+			'&::after': {
+				content: '""',
+				position: 'absolute',
+				width: '100%',
+			},
+		});
+	});
+
+	it('handles nested selectors with responsive styles inside', () => {
+		const styles = {
+			position: 'relative',
+			'&::after': {
+				content: '""',
+				color: {
+					_: 'black',
+					'<md': 'gray',
+					'md>': 'red',
+				},
+			},
+		};
+
+		expect(styler(styles)({})).toEqual({
+			position: 'relative',
+			'&::after': {
+				content: '""',
+				color: 'black',
+			},
+			'@media (max-width: 47.99rem)': {
+				'&::after': { color: 'gray' },
+			},
+			'@media (min-width: 64.01rem)': {
+				'&::after': { color: 'red' },
+			},
+		});
+	});
+
+	it('handles deeply nested selectors with responsive styles', () => {
+		const styles = {
+			color: 'black',
+			'&:hover': {
+				color: {
+					_: 'blue',
+					sm: 'green',
+				},
+				'&::before': {
+					content: '"*"',
+					color: {
+						_: 'red',
+						'md>': 'orange',
+					},
+				},
+			},
+		};
+
+		expect(styler(styles)({})).toEqual({
+			color: 'black',
+			'&:hover': {
+				color: 'blue',
+				'&::before': {
+					content: '"*"',
+					color: 'red',
+				},
+			},
+			'@media (min-width: 40.625rem) and (max-width: 48rem)': {
+				'&:hover': { color: 'green' },
+			},
+			'@media (min-width: 64.01rem)': {
+				'&:hover': {
+					'&::before': { color: 'orange' },
+				},
+			},
+		});
+	});
+
+	it('handles functions returning nested responsive styles', () => {
+		const styles = {
+			color: (props: any) => ({
+				_: 'black',
+				sm: props.active ? 'green' : 'red',
+			}),
+			'&:hover': {
+				color: (props: any) => ({
+					_: 'blue',
+					md: props.active ? 'purple' : 'orange',
+				}),
+			},
+		};
+
+		expect(styler(styles)({ active: true })).toEqual({
+			color: 'black',
+			'&:hover': {
+				color: 'blue',
+			},
+			'@media (min-width: 40.625rem) and (max-width: 48rem)': {
+				color: 'green',
+			},
+			'@media (min-width: 48rem) and (max-width: 64rem)': {
+				'&:hover': { color: 'purple' },
+			},
+		});
+
+		expect(styler(styles)({ active: false })).toEqual({
+			color: 'black',
+			'&:hover': {
+				color: 'blue',
+			},
+			'@media (min-width: 40.625rem) and (max-width: 48rem)': {
+				color: 'red',
+			},
+			'@media (min-width: 48rem) and (max-width: 64rem)': {
+				'&:hover': { color: 'orange' },
+			},
+		});
+	});
+
+	it('handles multiple responsive layers across nested selectors', () => {
+		const styles = {
+			padding: {
+				_: '1rem',
+				sm: '2rem',
+			},
+			'&:hover': {
+				background: {
+					_: 'white',
+					md: 'lightgray',
+				},
+				'& span': {
+					color: {
+						_: 'blue',
+						'lg>': 'navy',
+					},
+				},
+			},
+		};
+
+		expect(styler(styles)({})).toEqual({
+			padding: '1rem',
+			'&:hover': {
+				background: 'white',
+				'& span': {
+					color: 'blue',
+				},
+			},
+			'@media (min-width: 40.625rem) and (max-width: 48rem)': {
+				padding: '2rem',
+			},
+			'@media (min-width: 48rem) and (max-width: 64rem)': {
+				'&:hover': {
+					background: 'lightgray',
+				},
+			},
+			'@media (min-width: 73.76rem)': {
+				'&:hover': {
+					'& span': {
+						color: 'navy',
+					},
+				},
+			},
+		});
+	});
+
+	it('supports dynamic values inside nested selectors from props', () => {
+		const styles = {
+			color: 'black',
+			'& .label': {
+				color: (props: any) => ({
+					_: props.primary ? 'blue' : 'gray',
+					xs: 'green',
+				}),
+			},
+		};
+
+		expect(styler(styles)({ primary: true })).toEqual({
+			color: 'black',
+			'& .label': {
+				color: 'blue',
+			},
+			'@media (min-width: 30rem) and (max-width: 40.625rem)': {
+				'& .label': {
+					color: 'green',
+				},
+			},
+		});
+	});
+});
+
 describe('generateRangeMediaQuery', () => {
 	it('generates min-max media query', () => {
 		expect(generateRangeMediaQuery([40, 50])).toBe(
