@@ -12,7 +12,7 @@ import {
 } from './styles';
 import { navLinks } from './contents';
 import Image from 'next/image';
-import ThemeToggler from '@/components/themeToggler';
+import ThemeToggler from '@/components/theme-toggler';
 import { useAtomValue } from 'jotai';
 import { globalThemeAtom } from '@/globals/states';
 import { ThemeMode } from '@/globals/types';

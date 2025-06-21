@@ -6,7 +6,7 @@ import { useAtom } from 'jotai';
 import { globalThemeAtom } from '@/globals/states';
 import { ThemeMode } from '@/globals/types';
 
-function ThemeToggle() {
+function ThemeToggler() {
 	const [globalTheme, setGlobalTheme] = useAtom(globalThemeAtom);
 	const isDark: boolean = globalTheme === ThemeMode.DARK;
 	const toggleSound = useRef<HTMLAudioElement | null>(null);
@@ -39,4 +39,4 @@ function ThemeToggle() {
 	);
 }
 
-export default ThemeToggle;
+export default ThemeToggler;
