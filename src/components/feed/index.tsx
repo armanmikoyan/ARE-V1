@@ -1,6 +1,7 @@
 import { SkeletonVariant } from '@/components/skeleton/types';
 import { FeedWrapper, SkeletonTextWrapper } from './styles';
 import Skeleton from '@/components/skeleton';
+
 export default function Feed() {
 	return (
 		<>
