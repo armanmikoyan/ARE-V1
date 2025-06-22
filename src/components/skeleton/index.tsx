@@ -4,26 +4,31 @@ import { SkeletonProps, SkeletonVariant } from './types';
 /**
  * Generic Skeleton loading block with shimmer animation.
  *
+ * Renders a skeleton placeholder used to indicate loading content.
+ * Supports both text and image variants with customizable styles and animation.
+ *
  * @param {object} props - Component props.
- * @param {number} [props.width=20] - Width of the skeleton block in rem units.
- * @param {number} [props.height=1.2] - Height of the skeleton block in rem units.
- * @param {string} [props.colorPrimary='var(--color-primary)'] - Primary color used in the shimmer gradient.
- * @param {string} [props.colorSecondary='var(--color-secondary)'] - Secondary color used in the shimmer gradient.
- * @param {string} [props.timing='1.1s infinite ease-in-out'] - CSS animation timing function for shimmer animation.
- * @param {string|number} [props.radius='var(--radius-md)'] - Border radius of the skeleton block; can be a CSS variable string or a number (interpreted as rem).
- * @param {SkeletonVariant} [props.variant=SkeletonVariant.TEXT] - The variant of the skeleton to render, e.g. text or image.
+ * @param {number} [props.width=20] - Width of the skeleton block in `rem` units.
+ * @param {number} [props.height=1.2] - Height of the skeleton block in `rem` units.
+ * @param {string} [props.colorPrimary='grey'] - Primary color used in the shimmer gradient.
+ * @param {string} [props.colorSecondary='white'] - Secondary color used in the shimmer gradient.
+ * @param {string} [props.timing='1.1s infinite ease-in-out'] - Animation timing function for the shimmer effect.
+ * @param {string|number} [props.radius='var(--radius-md)'] - Border radius; either a CSS variable or a number (interpreted as `rem`).
+ * @param {SkeletonVariant} [props.variant=SkeletonVariant.TEXT] - Type of skeleton: `TEXT` or `IMAGE`.
+ * @param {string} [props.imageUrl='./globe.svg'] - Optional image URL to display as background in `IMAGE` variant.
  * @param {...any} [rest] - Additional props forwarded to the underlying styled component.
- * @returns {JSX.Element} The rendered Skeleton loading block.
+ * @returns {JSX.Element} The rendered Skeleton component.
  */
 
 export default function Skeleton({
 	width = 20,
 	height = 1.2,
-	colorPrimary = 'var(--color-primary)',
-	colorSecondary = 'var(--color-secondary)',
+	colorPrimary = 'white',
+	colorSecondary = 'grey',
 	timing = '1.1s infinite ease-in-out',
 	radius = 'var(--radius-md)',
 	variant = SkeletonVariant.TEXT,
+	imageUrl = './globe.svg',
 	...rest
 }: SkeletonProps) {
 	const SkeletonBlock = variant === SkeletonVariant.TEXT ? SkeletonText : SkeletonImage;
@@ -37,7 +42,7 @@ export default function Skeleton({
 			timing={timing}
 			radius={radius}
 			variant={variant}
-			imageUrl="./globe.svg"
+			imageUrl={imageUrl}
 			{...rest}
 		/>
 	);

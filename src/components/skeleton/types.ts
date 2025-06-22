@@ -5,6 +5,7 @@ export interface SkeletonProps {
 	colorSecondary?: string;
 	timing?: string;
 	radius?: string | number;
+	imageUrl?: string;
 	variant?: SkeletonVariant;
 	[key: string]: any;
 }
