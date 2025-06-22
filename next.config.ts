@@ -18,6 +18,9 @@ const nextConfig: NextConfig = {
 	distDir: 'out',
 	assetPrefix: `/${repoName}/`,
 	basePath: `/${repoName}`,
+	images: {
+		unoptimized: true,
+	},
 	env: {
 		NEXT_PUBLIC_BASE_PATH: `/${repoName}`,
 	},
