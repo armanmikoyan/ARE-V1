@@ -30,9 +30,44 @@ export const SkeletonText = styled.div(
 		borderRadius: ({ radius }) => ({
 			_: typeof radius === 'number' ? `${radius}rem` : radius,
 		}),
-
-		backgroundPosition: '0 0',
 	}),
 );
 
-export const SkeletonImage = styled.div(sx({}));
+export const SkeletonImage = styled.div(
+	sx({
+		position: 'relative',
+		overflow: 'hidden',
+		backgroundImage: ({ imageUrl }) => ({
+			_: imageUrl ? `url('${imageUrl}')` : 'none',
+		}),
+		backgroundSize: '30% auto', // IMAGE SIZE
+		backgroundPosition: 'center',
+		backgroundRepeat: 'no-repeat',
+		width: ({ width }) => ({
+			_: `${width}rem`,
+		}),
+		height: ({ height }) => ({
+			_: `${height}rem`,
+		}),
+		borderRadius: ({ radius }) => ({
+			_: typeof radius === 'number' ? `${radius}rem` : radius,
+		}),
+
+		'&::after': {
+			content: '""',
+			position: 'absolute',
+			top: 0,
+			left: 0,
+			width: '100%',
+			height: '100%',
+			background: ({ colorPrimary, colorSecondary }) => ({
+				_: getEmphasizedGradient(colorPrimary, colorSecondary),
+			}),
+			backgroundSize: ({ width = 10 }) => `${width * 4}rem 100%`,
+			animation: ({ width, timing }) => ({
+				_: `${createShimmer(width * 2)} ${timing}`,
+			}),
+			opacity: 0.3,
+		},
+	}),
+);
