@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { GetServerSidePropsContext } from 'next';
 import DefaultLayout from '@/layouts/default';
+import Feed from '@/components/feed';
 
 export default function Home({ data }) {
 	void data;
@@ -12,7 +13,9 @@ export default function Home({ data }) {
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<DefaultLayout>{null}</DefaultLayout>
+			<DefaultLayout>
+				<Feed />
+			</DefaultLayout>
 		</>
 	);
 }

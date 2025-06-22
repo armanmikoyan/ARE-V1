@@ -43,6 +43,7 @@ export const SkeletonImage = styled.div(
 		backgroundSize: '30% auto', // IMAGE SIZE
 		backgroundPosition: 'center',
 		backgroundRepeat: 'no-repeat',
+		margin: '1rem 0 0',
 		width: ({ width }) => ({
 			_: `${width}rem`,
 		}),
