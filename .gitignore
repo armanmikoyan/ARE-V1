@@ -15,7 +15,7 @@
 
 # next.js
 /.next/
-# /out/ // uncomment this
+/out/ 
 
 # production
 /build
