@@ -1,10 +1,10 @@
 export interface SkeletonProps {
 	width?: number;
 	height?: number;
+	radius?: number;
 	colorPrimary?: string;
 	colorSecondary?: string;
 	timing?: string;
-	radius?: string | number;
 	imageUrl?: string;
 	variant?: SkeletonVariant;
 	[key: string]: any;

@@ -9,6 +9,10 @@ export const FeedWrapper = styled.section(
 		justifyContent: 'center',
 		alignItems: 'center',
 		gap: '1rem',
+		flexDirection: {
+			_: 'row',
+			'<md': 'column',
+		},
 	}),
 );
 

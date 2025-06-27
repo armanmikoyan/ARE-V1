@@ -8,12 +8,12 @@ import { SkeletonProps, SkeletonVariant } from './types';
  * Supports both text and image variants with customizable styles and animation.
  *
  * @param {object} props - Component props.
- * @param {number} [props.width=20] - Width of the skeleton block in `rem` units.
- * @param {number} [props.height=1.2] - Height of the skeleton block in `rem` units.
+ * @param {number} [props.width=20] - Width of the skeleton block, will be converted to `rem` units.
+ * @param {number} [props.height=1.2] - Height of the skeleton block, will be converted to `rem` units.
+ * @param {number} [props.radius=0.5] -  Border Radius of the skeleton block, will be converted to `rem` units.
  * @param {string} [props.colorPrimary='grey'] - Primary color used in the shimmer gradient.
  * @param {string} [props.colorSecondary='white'] - Secondary color used in the shimmer gradient.
  * @param {string} [props.timing='1.1s infinite ease-in-out'] - Animation timing function for the shimmer effect.
- * @param {string|number} [props.radius='var(--radius-md)'] - Border radius; either a CSS variable or a number (interpreted as `rem`).
  * @param {SkeletonVariant} [props.variant=SkeletonVariant.TEXT] - Type of skeleton: `TEXT` or `IMAGE`.
  * @param {string} [props.imageUrl='./globe.svg'] - Optional image URL to display as background in `IMAGE` variant.
  * @param {...any} [rest] - Additional props forwarded to the underlying styled component.
@@ -26,7 +26,7 @@ export default function Skeleton({
 	colorPrimary = 'white',
 	colorSecondary = 'grey',
 	timing = '1.1s infinite ease-in-out',
-	radius = 'var(--radius-md)',
+	radius = 0.5,
 	variant = SkeletonVariant.TEXT,
 	imageUrl = './globe.svg',
 	...rest
