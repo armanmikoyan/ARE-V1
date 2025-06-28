@@ -8,6 +8,12 @@ import {
 	MAX_PULL_VELOCITY_CHANGE,
 	MIN_DOTS,
 	INITIAL_DOTS,
+	PARTICLE_COLOR,
+	LINE_COLOR,
+	EXPLOSION_COLOR,
+	INITIAL_SPEED,
+	EXPLOSION_MIN_SPEED,
+	EXPLOSION_MAX_SPEED,
 } from './constants';
 import { Point, Particle, Explosion } from './types';
 
@@ -26,8 +32,8 @@ export default function Space() {
 		const points: Point[] = Array.from({ length: INITIAL_DOTS }).map(() => ({
 			x: Math.random() * width,
 			y: Math.random() * height,
-			vx: (Math.random() - 0.5) * 0.3,
-			vy: (Math.random() - 0.5) * 0.3,
+			vx: (Math.random() - 0.5) * INITIAL_SPEED,
+			vy: (Math.random() - 0.5) * INITIAL_SPEED,
 		}));
 
 		const explosions: Explosion[] = [];
@@ -40,7 +46,8 @@ export default function Space() {
 
 			for (let i = 0; i < particleCount; i++) {
 				const angle = (Math.PI * 2 * i) / particleCount;
-				const speed = 0.5 + Math.random() * 1;
+				const speed =
+					EXPLOSION_MIN_SPEED + Math.random() * (EXPLOSION_MAX_SPEED - EXPLOSION_MIN_SPEED);
 				particles.push({
 					x,
 					y,
@@ -57,8 +64,8 @@ export default function Space() {
 			points.push({
 				x: Math.random() * width,
 				y: Math.random() * height,
-				vx: (Math.random() - 0.5) * 0.3,
-				vy: (Math.random() - 0.5) * 0.3,
+				vx: (Math.random() - 0.5) * INITIAL_SPEED,
+				vy: (Math.random() - 0.5) * INITIAL_SPEED,
 			});
 		};
 
@@ -73,8 +80,8 @@ export default function Space() {
 
 					if (dist < CONNECTION_DISTANCE) {
 						const opacity = 1 - dist / CONNECTION_DISTANCE;
-						ctx.strokeStyle = `rgba(255,255,255,${opacity})`;
-						ctx.lineWidth = 0.3;
+						ctx.strokeStyle = `rgba(${LINE_COLOR},${opacity})`;
+						ctx.lineWidth = 0.5;
 						ctx.beginPath();
 						ctx.moveTo(p1.x, p1.y);
 						ctx.lineTo(p2.x, p2.y);
@@ -107,7 +114,7 @@ export default function Space() {
 			points.forEach((p) => {
 				ctx.beginPath();
 				ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2);
-				ctx.fillStyle = 'white';
+				ctx.fillStyle = PARTICLE_COLOR;
 				ctx.fill();
 			});
 
@@ -175,7 +182,7 @@ export default function Space() {
 
 					ctx.beginPath();
 					ctx.arc(particle.x, particle.y, 0.7, 0, Math.PI * 2);
-					ctx.fillStyle = `rgba(255,255,255,${particle.opacity})`;
+					ctx.fillStyle = `rgba(${EXPLOSION_COLOR},${particle.opacity})`;
 					ctx.fill();
 				});
 
