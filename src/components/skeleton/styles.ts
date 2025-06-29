@@ -8,7 +8,7 @@ const createShimmer = (distance: number) => keyframes`
 `;
 
 const getEmphasizedGradient = (colorPrimary: string, colorSecondary: string) => {
-	return `linear-gradient(90deg, ${colorSecondary} 10%, ${colorPrimary} 45%, ${colorSecondary} 90%)`;
+	return `linear-gradient(90deg, ${colorSecondary} 0%, ${colorPrimary} 15%, ${colorSecondary} 30%)`;
 };
 
 const SkeletonBase = {
@@ -28,9 +28,9 @@ export const AnimationBase = {
 	background: ({ colorPrimary, colorSecondary }) => ({
 		_: getEmphasizedGradient(colorPrimary, colorSecondary),
 	}),
-	backgroundSize: ({ width }) => `${width * 4}rem 100%`,
+	backgroundSize: ({ width }) => `${width * 2}rem 100%`,
 	animation: ({ width, timing }) => ({
-		_: `${createShimmer(width * 2)} ${timing}`,
+		_: `${createShimmer(width)} ${timing}`,
 	}),
 };
 

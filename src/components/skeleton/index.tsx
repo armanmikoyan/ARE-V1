@@ -23,9 +23,10 @@ import { SkeletonProps, SkeletonVariant } from './types';
 export default function Skeleton({
 	width = 20,
 	height = 1.2,
-	colorPrimary = 'white',
-	colorSecondary = 'grey',
-	timing = '1.1s infinite ease-in-out',
+	colorPrimary = '#eaeaea',
+	colorSecondary = '#7689a7',
+
+	timing = '1.3s infinite ease-out',
 	radius = 0.5,
 	variant = SkeletonVariant.TEXT,
 	imageUrl = './globe.svg',
