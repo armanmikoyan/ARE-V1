@@ -23,7 +23,7 @@ export const Nav = styled.nav(
 		marginTop: '0',
 		borderRadius: 'var(--radius-xxxl)',
 		width: '90%',
-		maxWidth: '57rem',
+		maxWidth: 'var(--application-max-width)',
 		fontSize: {
 			_: 'var(--font-size-sm)',
 			'<lg': 'var(--font-size-xs)',

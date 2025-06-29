@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { GetServerSidePropsContext } from 'next';
 import DefaultLayout from '@/layouts/default';
 import Feed from '@/components/feed';
-import Space from '@/components/space';
+import Hero from '@/components/hero';
 
 export default function Home({ data }) {
 	void data;
@@ -15,7 +15,7 @@ export default function Home({ data }) {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<DefaultLayout>
-				<Space />
+				<Hero />
 				<Feed />
 			</DefaultLayout>
 		</>
