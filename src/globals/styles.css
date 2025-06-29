@@ -36,6 +36,9 @@
 	--radius-xxl: 2rem;
 	--radius-xxxl: 5rem;
 	--radius-full: 9999rem;
+
+	/* Max app width  */
+	--application-max-width: 60rem;
 }
 .dark {
 	--color-text-primary: #e2f6fd;

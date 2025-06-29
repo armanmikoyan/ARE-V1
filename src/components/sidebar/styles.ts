@@ -37,7 +37,7 @@ export const SidebarWrapper = styled.nav(
 		alignItems: 'center',
 		justifyContent: 'space-between',
 		backgroundColor: 'transparent',
-		backdropFilter: 'blur(0.2rem)',
+		backdropFilter: 'blur(1rem)',
 		padding: '2rem 0.3rem 0.3rem 0.3rem;',
 		boxShadow: '0 0.1rem 1rem var(--color-primary)',
 		fontWeight: 'var(--font-weight-bold)',
