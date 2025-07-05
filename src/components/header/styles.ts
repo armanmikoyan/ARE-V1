@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import Link from 'next/link';
 import sx from '@/packages/styler';
 
-export const Nav = styled.nav(
+export const HeaderWrapper = styled.header(
 	sx({
 		display: {
 			_: 'flex',
@@ -11,23 +11,43 @@ export const Nav = styled.nav(
 		justifyContent: 'space-between',
 		alignItems: 'center',
 		backgroundColor: 'transparent',
-		padding: '1rem',
+		padding: {
+			_: '1rem',
+			'<sm': '1rem 0.5rem',
+		},
 		fontWeight: 'var(--font-weight-bold)',
 		margin: '0rem auto',
-		borderRadius: 'var(--radius-xxxl)',
-		width: '90%',
+
+		width: '100%',
 		maxWidth: 'var(--application-max-width)',
 		fontSize: {
 			_: 'var(--font-size-sm)',
 			'<lg': 'var(--font-size-xs)',
 		},
 		position: 'sticky',
+		borderBottom: '0.1rem solid var(--color-primary)',
 	}),
 );
 
-export const NavLogoWrapper = styled.div(sx({}));
+export const LogoWrapper = styled.div(sx({}));
 
-export const NavLink = styled(Link)(sx({}));
+export const LogoName = styled.strong(
+	sx({
+		fontSize: {
+			_: 'var(--font-size-xl)',
+			'<lg': 'var(--font-size-md)',
+		},
+		color: 'var(--color-primary)',
+	}),
+);
+
+export const LinkWrapper = styled(Link)(
+	sx({
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center',
+	}),
+);
 
 export const ActionWrapper = styled.div(
 	sx({
@@ -42,6 +62,7 @@ export const ActionWrapper = styled.div(
 
 export const Join = styled(Button)(
 	sx({
+		fontFamily: 'inherit',
 		fontWeight: 'var(--font-weight-semibold)',
 		backgroundColor: 'var(--color-accent)',
 		color: 'var(--color-primary-hover)',
