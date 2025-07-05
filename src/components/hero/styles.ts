@@ -15,7 +15,10 @@ export const HeroWrapper = styled.section(
 
 export const TextForm = styled.form(
 	sx({
-		width: '30rem',
+		width: {
+			_: '30rem',
+			'<sm': '20rem',
+		},
 		height: '7rem',
 	}),
 );
@@ -51,6 +54,7 @@ export const HeroTitle = styled.h1(
 	sx({
 		fontSize: 'var(--font-size-3xl)',
 		fontWeight: 'var(--font-weight-bold)',
+		textAlign: 'center',
 	}),
 );
 
