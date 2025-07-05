@@ -4,11 +4,9 @@ import sx from '@/packages/styler';
 
 export const Toggler = styled(Button)(
 	sx({
-		color: 'var(--color-accent)',
+		color: 'var(--color-primary)',
 		transition: 'color 0.8s ease, color 0.3s ease',
-		'&:hover': {
-			color: 'var(--color-accent-hover)',
-		},
+		'&:hover': {},
 		padding: {
 			_: null,
 			'<md': '0',

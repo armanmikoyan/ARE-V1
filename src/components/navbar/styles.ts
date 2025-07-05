@@ -7,18 +7,13 @@ export const Nav = styled.nav(
 	sx({
 		display: {
 			_: 'flex',
-			'<sm': 'none',
 		},
 		justifyContent: 'space-between',
 		alignItems: 'center',
 		backgroundColor: 'transparent',
-		padding: {
-			_: '0.8rem 3rem',
-			'<md': '0.8rem 2rem',
-		},
+		padding: '1rem',
 		fontWeight: 'var(--font-weight-bold)',
-		margin: '1.5rem auto',
-		marginTop: '0',
+		margin: '0rem auto',
 		borderRadius: 'var(--radius-xxxl)',
 		width: '90%',
 		maxWidth: 'var(--application-max-width)',
@@ -27,7 +22,6 @@ export const Nav = styled.nav(
 			'<lg': 'var(--font-size-xs)',
 		},
 		position: 'sticky',
-		top: '1.5rem',
 	}),
 );
 
@@ -46,15 +40,15 @@ export const ActionWrapper = styled.div(
 	}),
 );
 
-export const Subscribe = styled(Button)(
+export const Join = styled(Button)(
 	sx({
 		fontWeight: 'var(--font-weight-semibold)',
-		color: 'var(--color-primary)',
 		backgroundColor: 'var(--color-accent)',
+		color: 'var(--color-primary-hover)',
 		transition: 'background-color 0.3s ease, color 0.3s ease',
 		'&:hover': {
+			color: 'var(--color-primary)',
 			backgroundColor: 'var(--color-accent-hover)',
-			color: 'var(--color-primary-hover)',
 		},
 		fontSize: {
 			_: 'var(--font-size-sm)',

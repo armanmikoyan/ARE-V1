@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Nav, NavLink, NavLogoWrapper, ActionWrapper, Subscribe } from './styles';
+import { Nav, NavLink, NavLogoWrapper, ActionWrapper, Join } from './styles';
 import ThemeToggler from '@/components/theme-toggler';
 import { useAtomValue } from 'jotai';
 import { ThemeMode } from '@/globals/types';
@@ -21,7 +21,7 @@ export default function Navbar() {
 				</NavLink>
 			</NavLogoWrapper>
 			<ActionWrapper>
-				<Subscribe variant="contained">Join</Subscribe>
+				<Join variant="contained">Join</Join>
 				<ThemeToggler />
 			</ActionWrapper>
 		</Nav>
