@@ -7,7 +7,9 @@ import { useAtomValue } from 'jotai';
 
 export default function Header() {
 	const themeMode: string = useAtomValue(globalThemeAtom) === ThemeMode.DARK ? 'white' : 'black';
+	console.log('12');
 
+	console.log('11');
 	return (
 		<HeaderWrapper>
 			<LogoWrapper>
@@ -16,9 +18,11 @@ export default function Header() {
 				</LinkWrapper>
 			</LogoWrapper>
 			<ActionWrapper>
-				<Join variant="contained">Get API key</Join>
+				<Join variant="contained">Get API</Join>
 				<ThemeToggler />
 			</ActionWrapper>
 		</HeaderWrapper>
 	);
 }
+
+console.log('1111');
