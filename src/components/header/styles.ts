@@ -31,16 +31,6 @@ export const HeaderWrapper = styled.header(
 
 export const LogoWrapper = styled.div(sx({}));
 
-export const LogoName = styled.strong(
-	sx({
-		fontSize: {
-			_: 'var(--font-size-xl)',
-			'<lg': 'var(--font-size-md)',
-		},
-		color: 'var(--color-primary)',
-	}),
-);
-
 export const LinkWrapper = styled(Link)(
 	sx({
 		display: 'flex',
