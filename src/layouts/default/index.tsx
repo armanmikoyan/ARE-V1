@@ -1,6 +1,5 @@
 import React from 'react';
 import Navbar from '@/components/navbar';
-import Sidebar from '@/components/sidebar';
 import { Main } from './styles';
 import { Inter } from 'next/font/google';
 
@@ -12,7 +11,6 @@ function DefaultLayout({ children }) {
 	return (
 		<Main className={inter.className}>
 			<Navbar />
-			<Sidebar />
 			{children}
 		</Main>
 	);

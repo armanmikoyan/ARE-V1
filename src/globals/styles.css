@@ -1,11 +1,16 @@
 :root {
 	/* Color Palette */
-	--color-text-primary: #032114;
-	--color-text-secondary: #d8f8f0;
-	--color-background: #f1fefb;
-	--color-primary: #4382ff;
+	--color-primary: #c9c9c9;
+	--color-primary-hover: #ffffff;
+
 	--color-secondary: #446ed0;
+	--color-secondary-hover: #5e84ea;
+
+	--color-background: #151515;
+	--color-background-hover: #1f1f1f;
+
 	--color-accent: #4790f0;
+	--color-accent-hover: #62a2f7;
 
 	/* Font Weights */
 	--font-weight-thin: 100;
@@ -41,12 +46,17 @@
 	--application-max-width: 60rem;
 }
 .dark {
-	--color-text-primary: #e2f6fd;
-	--color-text-secondary: #e2f6fd;
-	--color-background: #020921;
-	--color-primary: #510aa9;
-	--color-secondary: #6e06ef;
-	--color-accent: #5311e1;
+	--color-primary: #c9c9c9;
+	--color-primary-hover: #ffffff;
+
+	--color-secondary: #446ed0;
+	--color-secondary-hover: #5e84ea;
+
+	--color-background: #151515;
+	--color-background-hover: #1f1f1f;
+
+	--color-accent: #4790f0;
+	--color-accent-hover: #62a2f7;
 }
 
 html,
