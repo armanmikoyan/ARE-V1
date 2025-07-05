@@ -6,14 +6,14 @@ import type { NextConfig } from 'next';
 
 // export default nextConfig;
 
-/** @type {import('next').NextConfig} */
+// for gh pages, 1. uncomment config above 2. remove config bellow  3. remove predeploy, deploy scripts in package.json, 4. change when you have money and can deploy it on VERCEL
 const nextConfig: NextConfig = {
 	output: 'export',
 	images: {
 		unoptimized: true,
 	},
-	basePath: '/are-v1',
-	assetPrefix: '/are-v1',
+	basePath: '/ARE-V1',
+	assetPrefix: '/ARE-V1',
 };
 
 export default nextConfig;

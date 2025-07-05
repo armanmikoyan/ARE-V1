@@ -11,8 +11,8 @@
 		"prepare": "husky",
 		"test": "jest",
 		"test:watch": "jest --watch",
-		"predeploy": "npm run build",
-		"deploy": "gh-pages -d out"
+		"predeploy": "npm run build && echo > out/.nojekyll",
+		"deploy": "gh-pages -d out --dotfiles"
 	},
 	"lint-staged": {
 		"*.{ts,js,jsx,tsx,md,css}": [
