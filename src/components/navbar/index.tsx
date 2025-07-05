@@ -1,6 +1,5 @@
 import Image from 'next/image';
-import { Nav, NavList, NavItem, NavLink, NavLogoWrapper, ActionWrapper, Subscribe } from './styles';
-import { navLinks } from './contents';
+import { Nav, NavLink, NavLogoWrapper, ActionWrapper, Subscribe } from './styles';
 import ThemeToggler from '@/components/theme-toggler';
 import { useAtomValue } from 'jotai';
 import { ThemeMode } from '@/globals/types';
@@ -21,15 +20,6 @@ export default function Navbar() {
 					/>
 				</NavLink>
 			</NavLogoWrapper>
-			<NavList>
-				{navLinks.map(({ label, href }, id) => {
-					return (
-						<NavItem key={id}>
-							<NavLink href={href}>{label}</NavLink>
-						</NavItem>
-					);
-				})}
-			</NavList>
 			<ActionWrapper>
 				<Subscribe variant="contained">Join</Subscribe>
 				<ThemeToggler />

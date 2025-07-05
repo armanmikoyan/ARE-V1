@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import { GetServerSidePropsContext } from 'next';
 import DefaultLayout from '@/layouts/default';
-import Feed from '@/components/feed';
 import Hero from '@/components/hero';
 
 export default function Home({ data }) {
@@ -16,7 +15,6 @@ export default function Home({ data }) {
 			</Head>
 			<DefaultLayout>
 				<Hero />
-				<Feed />
 			</DefaultLayout>
 		</>
 	);
