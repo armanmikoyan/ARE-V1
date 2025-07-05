@@ -8,8 +8,8 @@
 | `utils.test.js`  | Unit tests for the utility functions.                               |
 | `types.ts`       | TypeScript type/interface/enums declarations used in the component. |
 | `states.ts`      | Local Jotai atomsused in this component.                            |
+| `constants.ts`   | Constant values                                                     |
 | `contents.ts`    | Local Contents for dynamic mapping                                  |
-| `constants.ts`   | constant values                                                     |
 
 ---
 
